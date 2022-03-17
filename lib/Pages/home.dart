@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
+import 'package:flutter_svg/flutter_svg.dart';
 class HomePage extends StatefulWidget {
   const HomePage(
     { Key? key ,required this.user}) : super(key: key);
@@ -25,9 +25,20 @@ class _HomePageState extends State<HomePage> {
           children: <Widget>[
             Column(
               children: <Widget>[
-               GridView.count(crossAxisCount: 2) ,
-                
+                Expanded(
+               child:GridView.count(
+                 crossAxisSpacing:10,
+                 mainAxisSpacing: 10,
+                 primary: false,
+                 children:<Widget>[
+                   SvgPicture.asset('assets/svg/knowlege.svg',height: 128,),
+                   Text('Knowledge')
+                 ],
+                 crossAxisCount: 2
+                 ) ,
+                )
               ],
+                
             )
             
 
