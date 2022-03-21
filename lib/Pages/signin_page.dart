@@ -17,7 +17,10 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
+  bool _obscureText= true;
  String? _email,_password,_idnumber,_names;
+ TextEditingController password =TextEditingController();
+ TextEditingController confirmpassword=TextEditingController();
   final GlobalKey<FormState>_formkey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
@@ -104,20 +107,35 @@ class _SignUpState extends State<SignUp> {
            SizedBox(
              height: 20.0,
            ),
-           TextFormField(
+             TextFormField(
              validator: (input){
-               if(input == ""){
-                 return 'Passwords do not match';
+               if(input ==""){
+                 return 'please re-enter password';
                }
+               print(password.text);
+               print(confirmpassword.text);
+               if(password.text!=confirmpassword.text){
+                 return "passwords are not a match";
+               }
+               return null;
+
              },
              onSaved:(input) =>_password = input! ,
+             obscureText:_obscureText,
              decoration: InputDecoration(
-               labelText: 'Confirm Password',
-               prefixIcon: Icon(Icons.lock_outlined,color: Colors.purple,),
+               labelText: 'Confirm Password',prefixIcon: Icon(Icons.lock_outlined,color: Colors.purple,),
                border: OutlineInputBorder(borderRadius: BorderRadius.circular(30.0),),
-             ),
-             obscureText: true,
-           ),
+               suffixIcon:IconButton(
+            icon:Icon(
+              _obscureText ? Icons.visibility :Icons.visibility_off),
+              onPressed:(){
+                setState((){
+                  _obscureText =!_obscureText;
+                });
+              }),
+            ),
+             
+        ),
            SizedBox(
              height: 20.0,
            ),
@@ -146,7 +164,7 @@ class _SignUpState extends State<SignUp> {
         OutlinedButton(
               onPressed: () {
       // Respond to button press
-      Navigator.push(context, MaterialPageRoute(builder: (context) => LogIn()));
+            Navigator.push(context, MaterialPageRoute(builder: (context) => LogIn()));
            },
          child: Text("login"),
          style: OutlinedButton.styleFrom(

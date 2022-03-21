@@ -14,6 +14,7 @@ class LogIn extends StatefulWidget {
 }
 
 class _LogInState extends State<LogIn> {
+  bool _obscureText =true;
   late String _email,_password;
   final GlobalKey<FormState>_formkey = GlobalKey<FormState>();
   @override
@@ -60,12 +61,32 @@ class _LogInState extends State<LogIn> {
                }
              },
              onSaved:(input) =>_password = input! ,
+             obscureText:_obscureText,
              decoration: InputDecoration(
                labelText: 'Password',prefixIcon: Icon(Icons.lock_outlined,color: Colors.purple,),
                border: OutlineInputBorder(borderRadius: BorderRadius.circular(30.0),),
-             ),
-             obscureText: true,
-           ),
+               suffixIcon:IconButton(
+            icon:Icon(
+              _obscureText ? Icons.visibility :Icons.visibility_off),
+              onPressed:(){
+                setState((){
+                  _obscureText =!_obscureText;
+                });
+              }),
+            ),
+             
+        ),
+        TextButton(
+                child: Text('Forgot Password'),
+                 style: TextButton.styleFrom(
+                  primary: Colors.purple,
+            
+                       ),
+                    onPressed: () {
+                
+                              }
+        ),
+           
            SizedBox(
              height: 30.0,
            ),
@@ -85,16 +106,7 @@ class _LogInState extends State<LogIn> {
              SizedBox(
                height: 20.0,
              ),
-             TextButton(
-                child: Text('Forgot Password'),
-                 style: TextButton.styleFrom(
-                  primary: Colors.purple,
-            
-                       ),
-                    onPressed: () {
-                
-                              }
-        ),
+             
 
         SizedBox(
           height: 50.0,
@@ -141,4 +153,5 @@ class _LogInState extends State<LogIn> {
       }
     }
   }
+
 }
