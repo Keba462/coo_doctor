@@ -18,7 +18,10 @@ class SignUp extends StatefulWidget {
 
 class _SignUpState extends State<SignUp> {
   bool _obscureText= true;
+  String _role ='Patient';
  String? _email,_password,_idnumber,_names;
+String title ="Role";
+
  TextEditingController password =TextEditingController();
  TextEditingController confirmpassword=TextEditingController();
   final GlobalKey<FormState>_formkey = GlobalKey<FormState>();
@@ -34,14 +37,9 @@ class _SignUpState extends State<SignUp> {
         key: _formkey,
         child: Column(
           children: <Widget>[
-            CircleAvatar(
-                  backgroundColor: Colors.transparent,
-                  radius: 48.0,
-                  child: Image.asset('assets/logo.png'),
-                ),
             SizedBox(
-             height: 10.0,
-           ),
+          height: 10.0,
+        ),
            TextFormField(
              validator:(input) {
                if(input == ""){
@@ -50,7 +48,7 @@ class _SignUpState extends State<SignUp> {
              },
              onSaved:(input) => _idnumber = input!,
              decoration: InputDecoration(
-               labelText: 'Idnmuber',prefixIcon: Icon(Icons.person_outlined,color: Colors.purple,),
+               labelText: 'Idnmuber',prefixIcon: Icon(Icons.person,color: Colors.purple,),
                border: OutlineInputBorder(borderRadius: BorderRadius.circular(30.0),),
              ),
             
@@ -66,7 +64,7 @@ class _SignUpState extends State<SignUp> {
              },
              onSaved:(input) => _names = input!,
              decoration: InputDecoration(
-               labelText: 'Names',prefixIcon: Icon(Icons.person_outlined,color: Colors.purple,),
+               labelText: 'Names',prefixIcon: Icon(Icons.person,color: Colors.purple,),
                border: OutlineInputBorder(borderRadius: BorderRadius.circular(30.0),),
              ),
             
@@ -82,7 +80,7 @@ class _SignUpState extends State<SignUp> {
              },
              onSaved:(input) => _email = input!,
              decoration: InputDecoration(
-               labelText: 'Email',prefixIcon: Icon(Icons.person_outlined,color: Colors.purple,),
+               labelText: 'Email',prefixIcon: Icon(Icons.person,color: Colors.purple,),
                border: OutlineInputBorder(borderRadius: BorderRadius.circular(30.0),),
              ),
             
@@ -90,6 +88,21 @@ class _SignUpState extends State<SignUp> {
            SizedBox(
              height: 20.0,
            ),
+           /*
+           TextFormField(
+             validator:(input) {
+               if(input == ""){
+                 return 'please type in Your Role';
+               }
+             },
+             onSaved:(input) => _role= input!,
+             decoration: InputDecoration(
+               labelText: 'patient/doctor',prefixIcon: Icon(Icons.person_outlined,color: Colors.purple,),
+               border: OutlineInputBorder(borderRadius: BorderRadius.circular(30.0),),
+             ),
+            
+           ),
+          */
            TextFormField(
              validator: (input){
                if(input == ""){
@@ -137,9 +150,44 @@ class _SignUpState extends State<SignUp> {
              
         ),
            SizedBox(
+             height: 10.0,
+           ),
+           /*
+           ExpansionTile(
+             title:Text(title),
+             subtitle: Text('Select a Role'),
+             children:<Widget>[
+               ListTile(
+                 title:Text('Doctor')),
+                 ListTile(
+                 title:Text('Patient'))
+             ]
+             ),*/
+      DropdownButton<String>(
+      value: _role,
+      icon: const Icon(Icons.arrow_downward),
+      elevation: 16,
+      style: const TextStyle(color: Colors.deepPurple),
+      underline: Container(
+        height: 2,
+        color: Colors.deepPurpleAccent,
+      ),
+      onChanged: (String? newValue) {
+        setState(() {
+          _role = newValue!;
+        });
+      },
+      items: <String>['Patient', 'Doctor']
+          .map<DropdownMenuItem<String>>((String value) {
+        return DropdownMenuItem<String>(
+          value: value,
+          child: Text(value),
+        );
+      }).toList(),
+    ),
+              SizedBox(
              height: 20.0,
            ),
-  
            ElevatedButton(
              
              onPressed:signUp , 
@@ -189,7 +237,7 @@ class _SignUpState extends State<SignUp> {
       formState.save();
       try{
      await FirebaseAuth.instance.createUserWithEmailAndPassword(email: _email??"", password: _password??"").then((value){
-       FirebaseFirestore.instance.collection('patients').doc().set({"email":_email,"password":_password,"idnumber":_idnumber,"full names":_names},);
+       FirebaseFirestore.instance.collection('users').doc().set({"email":_email,"password":_password,"idnumber":_idnumber,"full names":_names,"role":_role},);
        print('created new account');
        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LogIn()));
      });

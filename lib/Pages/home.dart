@@ -19,7 +19,7 @@ class _HomePageState extends State<HomePage> {
     var size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
-        title: Text('Home ${widget.user.email}'),
+        title: Text('Home '),
          backgroundColor: Colors.purple,
         centerTitle: true,
         ),
@@ -28,21 +28,29 @@ class _HomePageState extends State<HomePage> {
             padding: EdgeInsets.zero,
             children: [
               DrawerHeader(
-                child:Text('Drawer Header'),
-
+                child:Text('Home ${widget.user.email}'),
                 decoration:BoxDecoration(
                   color: Colors.purple,
                 )
               ),
+              Divider(
+                height:1,
+                thickness:1,
+              ),
               ListTile(
+                leading:Icon(Icons.account_circle),
                 title: Text('Profile'),
                 onTap: (){
                   Navigator.pop(context);
-                },
+                }, 
               ),
                ListTile(
+                 leading:Icon(Icons.logout),
                 title: Text('Logout'),
-                onTap: showBanner,
+                onTap:(){ 
+                  showBanner();
+                  Navigator.pop(context);
+                },
               )
             ],
           )
@@ -54,10 +62,15 @@ class _HomePageState extends State<HomePage> {
                 Expanded(
                child:GridView.count(
                  crossAxisSpacing:10,
+                 padding:EdgeInsets.all(20),
                  mainAxisSpacing: 10,
                  primary: false,
                  children:<Widget>[
-                   Card(
+                   Container(
+                     width:200,
+                     height:200,
+                      padding: EdgeInsets.all(8),
+                  child:Card(
                      elevation:2,
                      child:Column(
                        mainAxisAlignment: MainAxisAlignment.center,
@@ -71,7 +84,12 @@ class _HomePageState extends State<HomePage> {
                      ]
                      )
                    ),
-                    Card(
+                   ),
+                   Container(
+                      width:200,
+                     height:200,
+                      padding: EdgeInsets.all(8),
+                    child:Card(
                      elevation:2,
                      child:Column(
                        mainAxisAlignment: MainAxisAlignment.center,
@@ -79,12 +97,19 @@ class _HomePageState extends State<HomePage> {
                    CircleAvatar(
                   backgroundColor: Colors.transparent,
                   radius: 48.0,
-                  child: Image.asset('assets/knowledge.png'),
+                  child: Image.asset('assets/comm.png'),
                 ),
-                Text('Knowledge')
+                Text('Communication')
                      ]
                      )
-                   ), Card(
+                   ), 
+                   color:Colors.purple,
+                   ),
+                   Container(
+                      width:200,
+                     height:200,
+                     padding: EdgeInsets.all(8),
+                    child:Card(
                      elevation:2,
                      child:Column(
                        mainAxisAlignment: MainAxisAlignment.center,
@@ -92,12 +117,71 @@ class _HomePageState extends State<HomePage> {
                    CircleAvatar(
                   backgroundColor: Colors.transparent,
                   radius: 48.0,
-                  child: Image.asset('assets/knowledge.png'),
+                  child: Image.asset('assets/feedback.png'),
                 ),
-                Text('Knowledge')
+                Text('Testing')
                      ]
                      )
-                   )
+                   ), 
+                   ),Container(
+                      width:200,
+                     height:200,
+                      padding: EdgeInsets.all(8),
+                    child:Card(
+
+                     elevation:2,
+                     child:Column(
+                       mainAxisAlignment: MainAxisAlignment.center,
+                     children:<Widget>[  
+                   CircleAvatar(
+                  backgroundColor: Colors.transparent,
+                  radius: 48.0,
+                  child: Image.asset('testing.png'),
+                ),
+                Text('Reports')
+                     ]
+                     )
+                   ), 
+                   ),
+                   Container(
+                      width:200,
+                     height:200,
+                      padding: EdgeInsets.all(8),
+                    child:Card(
+                     elevation:2,
+                     child:Column(
+                       mainAxisAlignment: MainAxisAlignment.center,
+                     children:<Widget>[  
+                   CircleAvatar(
+                  backgroundColor: Colors.transparent,
+                  radius: 48.0,
+                  child: Image.asset('assets/reports.png'),
+                ),
+                Text('Location')
+                     ]
+                     )
+                   ), 
+                   ),
+                   Container(
+                      width:200,
+                     height:200,
+                      padding: EdgeInsets.all(8),
+                    child:Card(
+                     elevation:2,
+                     child:Column(
+                       mainAxisAlignment: MainAxisAlignment.center,
+                     children:<Widget>[  
+                   CircleAvatar(
+                  backgroundColor: Colors.transparent,
+                  radius: 48.0,
+                  child: Image.asset('assets/location.png'),
+                ),
+                Text('Advice')
+                     ]
+                     )
+                   ), 
+                   ),
+                  
                  ],
                  crossAxisCount: 2
                  ) ,
@@ -111,18 +195,21 @@ class _HomePageState extends State<HomePage> {
           ),
       
           bottomNavigationBar:BottomNavigationBar(
+            backgroundColor:Colors.purple,
+            selectedItemColor:Colors.white,
+            unselectedItemColor:Colors.white.withOpacity(.60),
             items:<BottomNavigationBarItem>[
               BottomNavigationBarItem(
                 icon: Icon(Icons.home),
                 label: 'Home',
                 ),
                  BottomNavigationBarItem(
-                icon: Icon(Icons.home),
+                icon: Icon(Icons.library_books),
                 label: 'Protocols',
                 ),
                  BottomNavigationBarItem(
-                icon: Icon(Icons.home),
-                label: 'Notifications',
+                icon: Icon(Icons.mail),
+                label: 'Messages',
                 ),
                 
             ]
@@ -141,7 +228,9 @@ class _HomePageState extends State<HomePage> {
         TextButton(
           style: TextButton.styleFrom(primary: Colors.purple),
           onPressed:(){
+              ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
               Navigator.push(context, MaterialPageRoute(builder: (context) =>LogIn()));
+              
           }, 
           child: Text('YES'),
           ),

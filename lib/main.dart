@@ -43,6 +43,8 @@ class _WelcomPageState extends State<WelcomPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
+        width:MediaQuery.of(context).size.width,
+      height:MediaQuery.of(context).size.height,
         decoration: BoxDecoration(
           gradient: LinearGradient(colors:
            [hexStringToColor("#9900CC"),

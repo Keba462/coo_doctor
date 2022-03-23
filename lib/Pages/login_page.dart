@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:coo_doctor/Pages/forgot_pass.dart';
 import 'package:coo_doctor/Pages/home.dart';
 import 'package:coo_doctor/main.dart';
 import 'package:flutter/cupertino.dart';
@@ -29,14 +30,9 @@ class _LogInState extends State<LogIn> {
         key: _formkey,
         child: Column(
           children: <Widget>[
-            CircleAvatar(
-                  backgroundColor: Colors.transparent,
-                  radius: 48.0,
-                  child: Image.asset('assets/logo.jpg'),
-                ),
             SizedBox(
-             height: 30.0,
-           ),
+          height: 50.0,
+        ),
            TextFormField(
              validator:(input) {
                if(input == ""){
@@ -83,7 +79,7 @@ class _LogInState extends State<LogIn> {
             
                        ),
                     onPressed: () {
-                
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => ForgotPage()));
                               }
         ),
            
