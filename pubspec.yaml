@@ -41,6 +41,7 @@ dependencies:
   firebase_core: ^1.13.1
   cloud_firestore_web: ^2.6.10
   firebase_analytics_web: ^0.4.0+8
+  mlkit:
 
 dev_dependencies:
   flutter_test:
@@ -72,6 +73,10 @@ flutter:
    - assets/comm.png
    - assets/feedback.png
    - assets/location.png
+   - assets/hands.png
+   - assets/distance.png
+   - assets/mask.png
+
   fonts:
     - family: TimesNewRoman
       fonts: 

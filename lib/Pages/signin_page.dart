@@ -48,7 +48,7 @@ String title ="Role";
              },
              onSaved:(input) => _idnumber = input!,
              decoration: InputDecoration(
-               labelText: 'Idnmuber',prefixIcon: Icon(Icons.person,color: Colors.purple,),
+               labelText: 'Idnmuber/PassportNo',prefixIcon: Icon(Icons.person,color: Colors.purple,),
                border: OutlineInputBorder(borderRadius: BorderRadius.circular(30.0),),
              ),
             
@@ -88,21 +88,7 @@ String title ="Role";
            SizedBox(
              height: 20.0,
            ),
-           /*
-           TextFormField(
-             validator:(input) {
-               if(input == ""){
-                 return 'please type in Your Role';
-               }
-             },
-             onSaved:(input) => _role= input!,
-             decoration: InputDecoration(
-               labelText: 'patient/doctor',prefixIcon: Icon(Icons.person_outlined,color: Colors.purple,),
-               border: OutlineInputBorder(borderRadius: BorderRadius.circular(30.0),),
-             ),
-            
-           ),
-          */
+          
            TextFormField(
              validator: (input){
                if(input == ""){
@@ -152,17 +138,7 @@ String title ="Role";
            SizedBox(
              height: 10.0,
            ),
-           /*
-           ExpansionTile(
-             title:Text(title),
-             subtitle: Text('Select a Role'),
-             children:<Widget>[
-               ListTile(
-                 title:Text('Doctor')),
-                 ListTile(
-                 title:Text('Patient'))
-             ]
-             ),*/
+           
       DropdownButton<String>(
       value: _role,
       icon: const Icon(Icons.arrow_downward),

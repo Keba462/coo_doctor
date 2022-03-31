@@ -2,11 +2,11 @@ import 'dart:ui';
 
 import 'package:coo_doctor/Pages/forgot_pass.dart';
 import 'package:coo_doctor/Pages/home.dart';
-import 'package:coo_doctor/main.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:coo_doctor/views/HomeView.dart';
 import 'package:flutter/material.dart';
 import 'package:coo_doctor/Pages/signin_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:coo_doctor/Pages/Landing_Page.dart';
 class LogIn extends StatefulWidget {
   const LogIn({ Key? key }) : super(key: key);
 
@@ -142,7 +142,7 @@ class _LogInState extends State<LogIn> {
      UserCredential result =await FirebaseAuth.instance.signInWithEmailAndPassword(email: _email, password: _password);
       User? user =result.user;
       // ignore: prefer_const_constructors
-      Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage(user:user!)));
+      Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
       } on FirebaseAuthException catch(e){
         print('Failed with error code: ${e.code}');
         print(e);
