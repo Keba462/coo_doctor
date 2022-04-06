@@ -6,14 +6,14 @@ import 'package:coo_doctor/views/HomeView.dart';
 import 'package:coo_doctor/views/ProtocolView.dart';
 import 'package:coo_doctor/views/MessagesView.dart';
 class HomePage extends StatefulWidget {
-  const HomePage(
-    { Key? key }) : super(key: key);
-
+ HomePage(
+    { Key? key,}) : super(key: key);
   @override
   State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
+  
   int _currentIndex =0;
   final List<Widget>_children =[
     HomeView(),

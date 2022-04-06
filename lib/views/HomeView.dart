@@ -5,17 +5,14 @@ import 'package:coo_doctor/Pages/profilePage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class HomeView extends StatefulWidget {
-  const HomeView(
-    { Key? key,}) : super(key: key);
+ HomeView(
+    { Key? key, }) : super(key: key);
   
-  
-
   @override
   State<HomeView> createState() => _HomeViewState();
 }
 
 class _HomeViewState extends State<HomeView> {
-  late User user;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,7 +39,7 @@ class _HomeViewState extends State<HomeView> {
                 leading:Icon(Icons.account_circle),
                 title: Text('Profile'),
                 onTap: (){
-                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => ProfilePage(user: user,)));
+                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => ProfilePage()));
           
                 }, 
               ),

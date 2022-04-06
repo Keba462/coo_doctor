@@ -42,8 +42,8 @@ String title ="Role";
         ),
            TextFormField(
              validator:(input) {
-               if(input == ""){
-                 return 'please type Idnumber';
+               if(input == "" || !RegExp(r'^[0-9]{4}[1-2]{1}[0-9]{4}|[A-Z]{2}[0-9]{7}$').hasMatch(input!)){
+                 return 'please correct Idnumber or passport number';
                }
              },
              onSaved:(input) => _idnumber = input!,
@@ -58,7 +58,7 @@ String title ="Role";
            ),
            TextFormField(
              validator:(input) {
-               if(input == ""){
+               if(input == "" || !RegExp(r'^[A-Z a-z]+$').hasMatch(input!)){
                  return 'please type Fullname';
                }
              },
@@ -74,8 +74,8 @@ String title ="Role";
            ),
            TextFormField(
              validator:(input) {
-               if(input == ""){
-                 return 'please type Email';
+               if(input == "" ||!RegExp(r'^[A-Za-z0-9]+@([\w-]+\.)+[\w-]{2,}$').hasMatch(input!)){
+                 return 'please type in correct email address';
                }
              },
              onSaved:(input) => _email = input!,
@@ -91,8 +91,8 @@ String title ="Role";
           
            TextFormField(
              validator: (input){
-               if(input == ""){
-                 return 'please type password';
+               if(input == "" || !RegExp(r'^[A-Za-z0-9]{9,}$').hasMatch(input!)){
+                 return 'password must have at least nine characters';
                }
              },
              onSaved:(input) =>_password = input! ,

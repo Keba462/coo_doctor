@@ -2,28 +2,31 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:coo_doctor/Pages/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:coo_doctor/utils/provider_widget.dart';
+
 class ProfilePage extends StatelessWidget {
-  const ProfilePage({ Key? key,required this.user }) : super(key: key);
-final User user;
+  ProfilePage({ Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    var user =FirebaseAuth.instance.currentUser;
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
         title: Text('Profile'),
         backgroundColor: Colors.purple
       ),
-      body:StreamBuilder<DocumentSnapshot>(stream: FirebaseFirestore.instance.collection('users').doc(user.uid).snapshots(),
+      body:StreamBuilder<DocumentSnapshot>(stream: FirebaseFirestore.instance.collection('users').doc(user!.uid).snapshots(),
 
-      builder:(BuildContext context,AsyncSnapshot<DocumentSnapshot>snapshot){
-        if(snapshot.hasError){
-          return Text('Error :${snapshot.error}');
+      builder:(BuildContext context,AsyncSnapshot snapshot){
+        if(snapshot.hasData){
+          return  Text(snapshot.data!["role"]);
+          
         }
-        return  Text(snapshot.data!['idnumber']);
+       return Text('Error :${snapshot.error}');
+        
       }
       ),
     );
+    
   }
 }
 

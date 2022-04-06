@@ -16,7 +16,7 @@ class LogIn extends StatefulWidget {
 
 class _LogInState extends State<LogIn> {
   bool _obscureText =true;
-  late String _email,_password;
+  late String _email,_password,_error,_success;
   final GlobalKey<FormState>_formkey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
@@ -134,6 +134,48 @@ class _LogInState extends State<LogIn> {
       ),
     );
   }
+
+
+  Widget ShowAlert(){
+    if(_error != ""){
+    return Container(
+      color:Colors.purpleAccent,
+      width:double.infinity,
+      padding:EdgeInsets.all(8.0),
+      child:Row(
+        children:<Widget>[
+          Padding(
+            padding:EdgeInsets.only(right:8.0),
+            child:Icon(Icons.error_outline),
+          ),
+          Expanded(child:Text(_error,maxLines:3),),
+          Padding(
+            padding:EdgeInsets.only(right:8.0),
+         child: IconButton(
+            icon:Icon(Icons.close),
+            onPressed:(){
+              setState((){
+                _error= "";
+              });
+            },
+         ),
+          ),
+        ]
+      )
+    );
+    }
+    return Container(
+      color:Color.fromARGB(255, 162, 158, 163),
+      width:double.infinity,
+      padding:EdgeInsets.all(8.0),
+      child:Row(
+        children:<Widget>[
+          Icon(Icons.error_outline),
+        ]
+        ),
+    );
+    
+  }
   Future<void> logIn () async{
     final formState =_formkey.currentState;
       if(formState!.validate()){
@@ -142,10 +184,19 @@ class _LogInState extends State<LogIn> {
      UserCredential result =await FirebaseAuth.instance.signInWithEmailAndPassword(email: _email, password: _password);
       User? user =result.user;
       // ignore: prefer_const_constructors
+      setState((){
+      _success="Successfully logged in";
+      }
+      );
+      
       Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
       } on FirebaseAuthException catch(e){
-        print('Failed with error code: ${e.code}');
         print(e);
+        setState((){
+          _error='${e.message}';
+        });
+        print('Failed with error code: ${e.code}');
+        
       }
     }
   }
