@@ -56,6 +56,7 @@ class _WelcomPageState extends State<WelcomPage> {
                child:Column(
                  children:<Widget>[
                    logoWidget("assets/logo.png"),
+                   Text('Co-Doctor is an application which makes life easier in this Covid-19 Era So enjoy!!!',style:TextStyle(fontSize: 14,color: Colors.white),),
                    SizedBox(
                      height:30,
                    ),

@@ -4,16 +4,27 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class ProfilePage extends StatelessWidget {
-  ProfilePage({ Key? key}) : super(key: key);
+  String? myEmail, myPassword, myIdnumber, myNames;
+
+  ProfilePage({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    var user =FirebaseAuth.instance.currentUser;
     return Scaffold(
       appBar: AppBar(
-        centerTitle: true,
-        title: Text('Profile'),
-        backgroundColor: Colors.purple
+          centerTitle: true,
+          title: Text('Profile'),
+          backgroundColor: Colors.purple),
+      body: Center(
+        child: FutureBuilder(
+            future: fetch(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState != ConnectionState.done) {
+                return Text('Loading data please wait');
+              }
+              return Text("Full names:$myEmail");
+            }),
       ),
+      /*
       body:StreamBuilder<DocumentSnapshot>(stream: FirebaseFirestore.instance.collection('users').doc(user!.uid).snapshots(),
 
       builder:(BuildContext context,AsyncSnapshot snapshot){
@@ -24,11 +35,35 @@ class ProfilePage extends StatelessWidget {
        return Text('Error :${snapshot.error}');
         
       }
-      ),
+      ),*/
     );
-    
+  }
+
+  fetch() async {
+    final user = await FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(user.uid)
+          .get()
+          .then((ds) {
+        myNames = ds.data()!['full names'];
+        myIdnumber = ds.data()!['idnumber'];
+        myEmail = ds.data()!['email'];
+        myPassword = ds.data()!['password'];
+
+        print(myNames);
+        print(myIdnumber);
+        print(myEmail);
+        print(myPassword);
+      }).catchError((e) {
+        print(e);
+      });
+    }
   }
 }
+
+
 
 /*
 class ProfilePage extends StatefulWidget {
