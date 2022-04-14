@@ -28,6 +28,7 @@ class _TestingViewPatientState extends State<TestingViewPatient> {
   //Future<String> _loaded =loadModel();
   int? _age;
   double? _temp;
+ List<DatasetFields> selecteditems = List();
   final fields = [
     DatasetFields(title: 'Heart disease'),
     DatasetFields(title: 'Kidney disease'),
@@ -206,7 +207,7 @@ class _TestingViewPatientState extends State<TestingViewPatient> {
     return Column(
       children: <Widget>[
         ElevatedButton(
-          onPressed: () {},
+          onPressed: buildShowSummary,
           child: const Text('submit'),
           style: ElevatedButton.styleFrom(
               primary: Colors.purple,
@@ -254,10 +255,6 @@ class _TestingViewPatientState extends State<TestingViewPatient> {
         inputFormatters: <TextInputFormatter>[
           FilteringTextInputFormatter.allow(RegExp(r'[0-9]{1,3}')),
         ],
-        /*
-        onChanged: (value) {
-          _calculate();
-        },*/
         decoration: InputDecoration(
           labelText: 'Your Temprature',
           border: OutlineInputBorder(
@@ -277,6 +274,12 @@ class _TestingViewPatientState extends State<TestingViewPatient> {
           setState(() {
             final newValue = !field.value;
             field.value = newValue;
+            selecteditems.clear();
+            values.forEach((key, value) {
+            print('${key}: ${value}');
+             if (value) {
+                    selecteditems.add(DatasetFields(key, value));
+             }
           });
         },
       );
@@ -317,7 +320,7 @@ class _TestingViewPatientState extends State<TestingViewPatient> {
     );
   }
 
-  double _calculate() {
-    return (_temp! * 1.8) + 32;
-  }
+   Widget buildShowSummary() {
+    print(selecteditems.toString());
+   }
 }
