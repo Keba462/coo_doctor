@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 
 class MessagesView extends StatefulWidget {
   const MessagesView({Key? key}) : super(key: key);
@@ -161,13 +161,17 @@ class _MessagesViewState extends State<MessagesView> {
     if (formState!.validate()) {
       formState.save();
     }
-    try{
-      await  FirebaseFirestore.instance.collection('feedback').doc().set({"SenderEmail":_emailsender,"ReceiverEmail":_emailreceiver,"Message":_feedback,});
-       print('Sent Feedback');
-       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MessagesView()));
-    }catch(e){
-        print(e);
-
+    try {
+      await FirebaseFirestore.instance.collection('feedback').doc().set({
+        "SenderEmail": _emailsender,
+        "ReceiverEmail": _emailreceiver,
+        "Message": _feedback,
+      });
+      print('Sent Feedback');
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => MessagesView()));
+    } catch (e) {
+      print(e);
     }
   }
 }

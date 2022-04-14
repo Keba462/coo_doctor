@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 
 class ReportsPage extends StatefulWidget {
   const ReportsPage({Key? key}) : super(key: key);
@@ -88,13 +88,16 @@ class _ReportsPageState extends State<ReportsPage> {
     if (formState!.validate()) {
       formState.save();
     }
-    try{
-      await  FirebaseFirestore.instance.collection('reports').doc().set({"Email":_email,"Issue":_issue,});
-       print('Sent Report');
-       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => ReportsPage()));
-    }catch(e){
-        print(e);
-
+    try {
+      await FirebaseFirestore.instance.collection('reports').doc().set({
+        "Email": _email,
+        "Issue": _issue,
+      });
+      print('Sent Report');
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => ReportsPage()));
+    } catch (e) {
+      print(e);
     }
   }
 }
