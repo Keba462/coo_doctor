@@ -207,13 +207,19 @@ String title ="Role";
       
     );
   }
+  /*
+  StoreNewUser(user) async{
+    var firebaseUser = await FirebaseAuth.instance.currentUser();
+    FirebaseFirestore.instance.collection('users').document(firebaseUser.uid).setData({'email':user.email,'uid':user.uid}).then
+  }*/
   Future<void> signUp () async{
     final formState =_formkey.currentState;
       if(formState!.validate()){
       formState.save();
       try{
+        //var firebaseUser = await FirebaseAuth.instance.currentUser!();
      await FirebaseAuth.instance.createUserWithEmailAndPassword(email: _email??"", password: _password??"").then((value){
-       FirebaseFirestore.instance.collection('users').doc().set({"email":_email,"password":_password,"idnumber":_idnumber,"full names":_names,"role":_role},);
+       FirebaseFirestore.instance.collection('users').doc().set({"email":_email,"password":_password,"idnumber":_idnumber,"full names":_names,"role":_role,},);
        print('created new account');
        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LogIn()));
      });

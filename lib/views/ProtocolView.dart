@@ -21,6 +21,7 @@ class _ProtocolViewState extends State<ProtocolView> {
         child: Row(
           children:<Widget> [
             Expanded(child: Column(
+              
               mainAxisAlignment: MainAxisAlignment.center,
                      children:<Widget>[  
                    logoWidget("assets/mask.png"),

@@ -2,8 +2,9 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:coo_doctor/utils/symtoms.dart';
-import 'package:firebase_ml_custom/firebase_ml_custom.dart';
- /*
+import 'package:flutter/services.dart';
+//import 'package:firebase_ml_custom/firebase_ml_custom.dart';
+/*
  const String drycough=
  const String 
  const String 
@@ -12,18 +13,18 @@ import 'package:firebase_ml_custom/firebase_ml_custom.dart';
  const String 
 */
 class TestingViewPatient extends StatefulWidget {
-  const TestingViewPatient({ Key? key }) : super(key: key);
+  const TestingViewPatient({Key? key}) : super(key: key);
 
   @override
   State<TestingViewPatient> createState() => _TestingViewPatientState();
 }
 
 class _TestingViewPatientState extends State<TestingViewPatient> {
-  final GlobalKey<ScaffoldState>_scaffoldKey = GlobalKey<ScaffoldState>();
-  Future<String> _loaded =loadModel();
-   int? _age;
-  double?_temp;
-  final fields =[
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  //Future<String> _loaded =loadModel();
+  int? _age;
+  double? _temp;
+  final fields = [
     DatasetFields(title: 'Heart disease'),
     DatasetFields(title: 'Kidney disease'),
     DatasetFields(title: 'High blood pressure'),
@@ -31,7 +32,7 @@ class _TestingViewPatientState extends State<TestingViewPatient> {
     DatasetFields(title: 'Diabetes'),
     DatasetFields(title: 'Stroke or reduced immunity'),
   ];
-   final symptoms =[
+  final symptoms = [
     DatasetFields(title: 'Dry Cough'),
     DatasetFields(title: 'Sore Throat'),
     DatasetFields(title: 'Pain in the chest'),
@@ -43,6 +44,7 @@ class _TestingViewPatientState extends State<TestingViewPatient> {
     DatasetFields(title: 'Symptoms Progress'),
     DatasetFields(title: 'Travel History to afftected Country'),
   ];
+ /* 
   static Future<String> loadModel() async {
     final modelFile = await loadModelFromFirebase();
     return loadTFLiteModel(modelFile);
@@ -105,8 +107,9 @@ class _TestingViewPatientState extends State<TestingViewPatient> {
       rethrow;
     }
   }
-  
+
   @override
+  
   Widget build(BuildContext context) {
     return Scaffold(
       body:DefaultTextStyle(
@@ -130,25 +133,26 @@ class _TestingViewPatientState extends State<TestingViewPatient> {
     );
 
   }
+  */
 
 
   Widget errorScreen() {
     return Scaffold(
-      body:Center(
-        child:Text('Error Loading model.Please check logs'),
+      body: Center(
+        child: Text('Error Loading model.Please check logs'),
       ),
     );
   }
 
   Widget loadingScreen() {
-    return Scaffold (
-      body:Center(
-        child:Column(
-          mainAxisAlignment:MainAxisAlignment.center,
-          children:<Widget>[
+    return Scaffold(
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
             Padding(
-              padding:EdgeInsets.only(bottom:20),
-              child:CircularProgressIndicator(),
+              padding: EdgeInsets.only(bottom: 20),
+              child: CircularProgressIndicator(),
             ),
             Text('Please make sure that you are using wifi'),
           ],
@@ -156,147 +160,152 @@ class _TestingViewPatientState extends State<TestingViewPatient> {
       ),
     );
   }
-  Widget readyScreen() {
-    final columns =<Widget>[];
-    columns.add(buildRowTitle(context,'Fill in the needed details for your test'));
+
+  @override
+  Widget build(BuildContext context) {
+    final columns = <Widget>[];
+    columns.add(
+        buildRowTitle(context, 'Fill in the needed details for your test'));
     columns.add(buildInputDetails(context));
-    columns.add(buildRowTitle(context,'Please select the symptoms that apply to you'));
+    columns.add(
+        buildRowTitle(context, 'Please select the symptoms that apply to you'));
     columns.add(buildSelectSymptomsRowWidget(context));
-    columns.add(buildRowTitle(context,'Please select the underlying conditions that apply to you'));
+    columns.add(buildRowTitle(
+        context, 'Please select the underlying conditions that apply to you'));
     columns.add(buildSelectUnderlyingRowWidget(context));
     columns.add(buildSubmitButton(context));
 
- 
     return Scaffold(
-      
       key: _scaffoldKey,
-      appBar:AppBar(
-        centerTitle:true,
+      appBar: AppBar(
+        centerTitle: true,
         title: Text('Test'),
-        backgroundColor:Colors.purple,
+        backgroundColor: Colors.purple,
       ),
       body: SingleChildScrollView(
         child: Column(
-               children: columns,            
-             ),
-          
+          children: columns,
         ),
-        
+      ),
     );
   }
-  Widget buildSubmitButton(BuildContext context){
+
+  Widget buildSubmitButton(BuildContext context) {
     return Column(
       children: <Widget>[
         ElevatedButton(
-          onPressed:(){},
-             child: const Text('submit'),
-             style: ElevatedButton.styleFrom(
-                  primary: Colors.purple,
-                  shape: RoundedRectangleBorder(
+          onPressed: () {},
+          child: const Text('submit'),
+          style: ElevatedButton.styleFrom(
+              primary: Colors.purple,
+              shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(32.0)),
-              minimumSize: Size(200, 50)
-            
-                       ),
-            ),
-
+              minimumSize: Size(200, 50)),
+        ),
       ],
     );
   }
-  Widget buildInputDetails(BuildContext context){
-    return  Column(
-          children:<Widget>[
-              TextFormField(
-             validator:(input) {
-               if(input == ""){
-                 return 'please type in your age';
-               }
-             },
-             onSaved:(input) => _age = input! as int?,
-             decoration: InputDecoration(
-               labelText: 'Age',
-               border: OutlineInputBorder(borderRadius: BorderRadius.circular(30.0),),
-             ),
-            
-           ),
-           SizedBox(
-             height: 10.0,
-           ),
-           TextFormField(
-             validator:(input) {
-               if(input == ""){
-                 return 'please type in your temperature';
-               }
-             },
-             onSaved:(input) => _temp = input! as double,
-             onChanged: (value){
-               _calculate();
-             },
-             decoration: InputDecoration(
-               labelText: 'Your Temprature',
-               border: OutlineInputBorder(borderRadius: BorderRadius.circular(30.0),),
-             ),
-            
-           ),
-           SizedBox(
-             height: 20.0,
-           ),
-          ]
-    );
-  }
 
-  Widget buildSingleCheckbox(DatasetFields field) =>
-    buildCheckbox(
-      field:field,
-      onClicked:(){
-        setState((){
-          final newValue =!field.value;
-          field.value =newValue;
-        });
-      },
-    );
-
-  
-    Widget buildCheckbox({
-      required DatasetFields field,
-      required VoidCallback onClicked,
-    }) => ListTile (
-      onTap:onClicked,
-      leading:Checkbox(
-        value:field.value,
-        onChanged:(value)=>onClicked(),
-      ),
-    title:Text(field.title),
-    );
-
-  Widget buildSelectUnderlyingRowWidget(BuildContext context){
-    return Wrap(
-      children:[
-        ...fields.map(buildSingleCheckbox).toList(),
-      ]
-    );
-  }
-    Widget buildRowTitle(BuildContext context,String title){
-      return Center(
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 8.0,vertical: 10.0),
-          child: Text(title,style: Theme.of(context).textTheme.headline5
-          ),
-          ),
-      );
-    }
-
-    Widget buildSelectSymptomsRowWidget(BuildContext context){
-      return Wrap(
-        children: <Widget>[
-          ... symptoms.map(buildSingleCheckbox).toList(),
-          
+  Widget buildInputDetails(BuildContext context) {
+    return Column(children: <Widget>[
+      TextFormField(
+        keyboardType: TextInputType.number,
+        inputFormatters: <TextInputFormatter>[
+          FilteringTextInputFormatter.allow(RegExp(r'[0-9]{1,3}')),
         ],
+        decoration: InputDecoration(
+          labelText: 'Age',
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(30.0),
+          ),
+        ),
+      ),
+      SizedBox(
+        height: 10.0,
+      ),
+      /*
+      TextFormField(
+        keyboardType: TextInputType.number,
+        inputFormatters: <TextInputFormatter>[
+          FilteringTextInputFormatter.allow(RegExp(r'[0-9]{1,3}')),
+        ],
+        decoration: InputDecoration(
+          labelText: 'Your Temperature',
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(30.0),
+          ),
+        ),
+      ),
+      */
+      TextFormField(
+        keyboardType: TextInputType.number,
+        inputFormatters: <TextInputFormatter>[
+          FilteringTextInputFormatter.allow(RegExp(r'[0-9]{1,3}')),
+        ],
+        /*
+        onChanged: (value) {
+          _calculate();
+        },*/
+        decoration: InputDecoration(
+          labelText: 'Your Temprature',
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(30.0),
+          ),
+        ),
+      ),
+      SizedBox(
+        height: 20.0,
+      ),
+    ]);
+  }
+
+  Widget buildSingleCheckbox(DatasetFields field) => buildCheckbox(
+        field: field,
+        onClicked: () {
+          setState(() {
+            final newValue = !field.value;
+            field.value = newValue;
+          });
+        },
       );
-    }
-    double _calculate(){
-      return (_temp! * 1.8) + 32;
-      }
-    
-    
-  
+
+  Widget buildCheckbox({
+    required DatasetFields field,
+    required VoidCallback onClicked,
+  }) =>
+      ListTile(
+        onTap: onClicked,
+        leading: Checkbox(
+          value: field.value,
+          onChanged: (value) => onClicked(),
+        ),
+        title: Text(field.title),
+      );
+
+  Widget buildSelectUnderlyingRowWidget(BuildContext context) {
+    return Wrap(children: [
+      ...fields.map(buildSingleCheckbox).toList(),
+    ]);
+  }
+
+  Widget buildRowTitle(BuildContext context, String title) {
+    return Center(
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 10.0),
+        child: Text(title, style: Theme.of(context).textTheme.headline5),
+      ),
+    );
+  }
+
+  Widget buildSelectSymptomsRowWidget(BuildContext context) {
+    return Wrap(
+      children: <Widget>[
+        ...symptoms.map(buildSingleCheckbox).toList(),
+      ],
+    );
+  }
+
+  double _calculate() {
+    return (_temp! * 1.8) + 32;
+  }
 }
