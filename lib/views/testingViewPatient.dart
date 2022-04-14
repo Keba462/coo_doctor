@@ -3,6 +3,10 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:coo_doctor/utils/symtoms.dart';
 import 'package:flutter/services.dart';
+<<<<<<< HEAD
+=======
+
+>>>>>>> e7fa4c26dd62348122bffba97893378fffe54ce7
 //import 'package:firebase_ml_custom/firebase_ml_custom.dart';
 /*
  const String drycough=
@@ -44,7 +48,11 @@ class _TestingViewPatientState extends State<TestingViewPatient> {
     DatasetFields(title: 'Symptoms Progress'),
     DatasetFields(title: 'Travel History to afftected Country'),
   ];
+<<<<<<< HEAD
  /* 
+=======
+  /*
+>>>>>>> e7fa4c26dd62348122bffba97893378fffe54ce7
   static Future<String> loadModel() async {
     final modelFile = await loadModelFromFirebase();
     return loadTFLiteModel(modelFile);
@@ -80,7 +88,7 @@ class _TestingViewPatientState extends State<TestingViewPatient> {
       rethrow;
     }
   }
-
+*/
   /// Loads the model into some TF Lite interpreter.
   /// In this case interpreter provided by tflite plugin.
   static Future<String> loadTFLiteModel(File modelFile) async {
@@ -109,7 +117,11 @@ class _TestingViewPatientState extends State<TestingViewPatient> {
   }
 
   @override
+<<<<<<< HEAD
   
+=======
+  /*
+>>>>>>> e7fa4c26dd62348122bffba97893378fffe54ce7
   Widget build(BuildContext context) {
     return Scaffold(
       body:DefaultTextStyle(
@@ -135,7 +147,7 @@ class _TestingViewPatientState extends State<TestingViewPatient> {
   }
   */
 
-
+*/
   Widget errorScreen() {
     return Scaffold(
       body: Center(

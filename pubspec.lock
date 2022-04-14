@@ -155,13 +155,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.6.1"
-  firebase_ml_custom:
-    dependency: "direct main"
-    description:
-      name: firebase_ml_custom
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.2.0+3"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -181,6 +174,7 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.14.0"
+<<<<<<< HEAD
   flutter_settings_screens:
     dependency: "direct main"
     description:
@@ -188,6 +182,8 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.3.2-null-safety"
+=======
+>>>>>>> e7fa4c26dd62348122bffba97893378fffe54ce7
   flutter_svg:
     dependency: "direct main"
     description:
@@ -282,6 +278,7 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.0"
+<<<<<<< HEAD
   nested:
     dependency: transitive
     description:
@@ -289,6 +286,8 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.0"
+=======
+>>>>>>> e7fa4c26dd62348122bffba97893378fffe54ce7
   path:
     dependency: transitive
     description:
@@ -394,6 +393,7 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.4"
+<<<<<<< HEAD
   process:
     dependency: transitive
     description:
@@ -401,6 +401,8 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.2.4"
+=======
+>>>>>>> e7fa4c26dd62348122bffba97893378fffe54ce7
   proj4dart:
     dependency: transitive
     description:
@@ -408,6 +410,7 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.0"
+<<<<<<< HEAD
   provider:
     dependency: transitive
     description:
@@ -415,6 +418,8 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "6.0.2"
+=======
+>>>>>>> e7fa4c26dd62348122bffba97893378fffe54ce7
   quiver:
     dependency: transitive
     description:
@@ -422,6 +427,7 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.0.1+1"
+<<<<<<< HEAD
   shared_preferences:
     dependency: transitive
     description:
@@ -478,6 +484,8 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.0"
+=======
+>>>>>>> e7fa4c26dd62348122bffba97893378fffe54ce7
   sky_engine:
     dependency: transitive
     description: flutter
@@ -560,6 +568,7 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.1"
+<<<<<<< HEAD
   win32:
     dependency: transitive
     description:
@@ -567,6 +576,8 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.5.1"
+=======
+>>>>>>> e7fa4c26dd62348122bffba97893378fffe54ce7
   wkt_parser:
     dependency: transitive
     description:
@@ -574,6 +585,7 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.0"
+<<<<<<< HEAD
   xdg_directories:
     dependency: transitive
     description:
@@ -581,6 +593,8 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.2.0+1"
+=======
+>>>>>>> e7fa4c26dd62348122bffba97893378fffe54ce7
   xml:
     dependency: transitive
     description:
@@ -590,4 +604,8 @@ packages:
     version: "5.3.1"
 sdks:
   dart: ">=2.16.1 <3.0.0"
+<<<<<<< HEAD
   flutter: ">=2.8.0"
+=======
+  flutter: ">=2.0.0"
+>>>>>>> e7fa4c26dd62348122bffba97893378fffe54ce7

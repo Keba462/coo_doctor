@@ -1,4 +1,11 @@
 import 'package:flutter/material.dart';
+<<<<<<< HEAD
+=======
+import 'package:coo_doctor/Pages/login_page.dart';
+import 'package:coo_doctor/views/testingViewPatient.dart';
+import 'package:coo_doctor/views/locationView.dart';
+import 'package:coo_doctor/Pages/profilePage.dart';
+>>>>>>> e7fa4c26dd62348122bffba97893378fffe54ce7
 import 'package:firebase_auth/firebase_auth.dart';
 
 import '../Pages/pages.dart';
@@ -165,6 +172,7 @@ class _HomeViewState extends State<HomeView> {
                                       }),
                                 ])),
                       ),
+<<<<<<< HEAD
                       Container(
                         width: 100,
                         height: 100,
@@ -213,6 +221,8 @@ class _HomeViewState extends State<HomeView> {
                                       }),
                                 ])),
                       ),
+=======
+>>>>>>> e7fa4c26dd62348122bffba97893378fffe54ce7
                     ],
                     crossAxisCount: 2),
               )

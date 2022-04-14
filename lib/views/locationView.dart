@@ -32,6 +32,7 @@ class _MapState extends State<Map> {
                   Marker(
                     width: 45.0,
                     height: 45.0,
+<<<<<<< HEAD
                     point: LatLng(-21.23340, 27.49347),
                     builder: (context) => IconButton(
                         icon: const Icon(Icons.location_on,color: Colors.red),
@@ -80,6 +81,12 @@ class _MapState extends State<Map> {
                     builder: (context) => IconButton(
                         icon: const Icon(Icons.location_on),
                         tooltip: 'University of Botswana',
+=======
+                    point: LatLng(-24.66215, 25.93275),
+                    builder: (context) => IconButton(
+                        icon: const Icon(Icons.location_on),
+                        tooltip: 'Testing Centers',
+>>>>>>> e7fa4c26dd62348122bffba97893378fffe54ce7
                         onPressed: () {}),
                   ),
                 ]),
@@ -87,10 +94,17 @@ class _MapState extends State<Map> {
                   Marker(
                     width: 45.0,
                     height: 45.0,
+<<<<<<< HEAD
                     point: LatLng(-24.64998, 25.94468),
                     builder: (context) => IconButton(
                         icon: const Icon(Icons.location_on),
                         tooltip: 'Sir Keitumeile Masire Hospital',
+=======
+                    point: LatLng(-20.66215, 25.93275),
+                    builder: (context) => IconButton(
+                        icon: const Icon(Icons.location_on),
+                        tooltip: 'Vaccination Centers',
+>>>>>>> e7fa4c26dd62348122bffba97893378fffe54ce7
                         onPressed: () {}),
                   ),
                 ]),

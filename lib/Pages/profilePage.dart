@@ -4,7 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class ProfilePage extends StatelessWidget {
+<<<<<<< HEAD
   late String myEmail, myPassword, myIdnumber, myNames;
+=======
+  String? myEmail, myPassword, myIdnumber, myNames;
+>>>>>>> e7fa4c26dd62348122bffba97893378fffe54ce7
 
   ProfilePage({Key? key}) : super(key: key);
   @override
