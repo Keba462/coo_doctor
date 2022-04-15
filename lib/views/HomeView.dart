@@ -1,3 +1,4 @@
+import 'package:coo_doctor/views/settings/settings.dart';
 import 'package:flutter/material.dart';
 
 import '../Pages/pages.dart';
@@ -49,6 +50,14 @@ class _HomeViewState extends State<HomeView> {
               showBanner();
               Navigator.pop(context);
             },
+          ),
+          ListTile(
+            leading: const Icon(Icons.read_more),
+            title: const Text('Results'),
+            onTap: () {
+              showBanner();
+              Navigator.pop(context);
+            },
           )
         ],
       )),
@@ -56,7 +65,7 @@ class _HomeViewState extends State<HomeView> {
         children: <Widget>[
           Column(
             children: <Widget>[
-              Expanded(
+              Flexible(
                 child: GridView.count(
                     crossAxisSpacing: 10,
                     padding: const EdgeInsets.all(20),
@@ -135,7 +144,7 @@ class _HomeViewState extends State<HomeView> {
                                         primary: Colors.purple,
                                       ),
                                       onPressed: () {
-                                        //   Navigator.push(context, MaterialPageRoute(builder: (context) => ForgotPage()));
+                                        Navigator.push(context, MaterialPageRoute(builder: (context) => ReportsPage()));
                                       }),
                                 ])),
                       ),
@@ -187,7 +196,7 @@ class _HomeViewState extends State<HomeView> {
                                         primary: Colors.purple,
                                       ),
                                       onPressed: () {
-                                        // Navigator.push(context, MaterialPageRoute(builder: (context) => SettingsPage()));
+                                        Navigator.push(context, MaterialPageRoute(builder: (context) => SettingsPage()));
                                       }),
                                 ])),
                       ),
@@ -197,28 +206,28 @@ class _HomeViewState extends State<HomeView> {
                         padding: const EdgeInsets.all(8),
                         child: Card(
                             elevation: 2,
-                            child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: <Widget>[
-                                  CircleAvatar(
-                                    backgroundColor: Colors.transparent,
-                                    radius: 48.0,
-                                    child: Image.asset('assets/help.png'),
-                                  ),
-                                  TextButton(
-                                      child: const Text('Help'),
-                                      style: TextButton.styleFrom(
-                                        primary: Colors.purple,
-                                      ),
-                                      onPressed: () {
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    const Map()));
-                                      }),
-                                ])),
-                      ),
+                              child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: <Widget>[
+                                    CircleAvatar(
+                                      backgroundColor: Colors.transparent,
+                                      radius: 48.0,
+                                      child: Image.asset('assets/help.png'),
+                                    ),
+                                    TextButton(
+                                        child: const Text('Help'),
+                                        style: TextButton.styleFrom(
+                                          primary: Colors.purple,
+                                        ),
+                                        onPressed: () {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      const Map()));
+                                        }),
+                                  ]),
+                            )),
                     ],
                     crossAxisCount: 2),
               )

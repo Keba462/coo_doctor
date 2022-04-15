@@ -35,7 +35,7 @@ late CovidUser covidUser;
     return Scaffold(
       appBar: AppBar(
         title: const Text('Profile '),
-        automaticallyImplyLeading: false,
+        centerTitle: true,
         backgroundColor: Colors.purple,
         actions:  [
           Padding(

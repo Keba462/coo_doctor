@@ -36,10 +36,6 @@ class _ReportsPageState extends State<ReportsPage> {
               onSaved: (input) => _email = input!,
               decoration: InputDecoration(
                 labelText: 'YourEmail',
-                prefixIcon: Icon(
-                  Icons.person,
-                  color: Colors.purple,
-                ),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(30.0),
                 ),
@@ -58,13 +54,10 @@ class _ReportsPageState extends State<ReportsPage> {
               onSaved: (input) => _issue = input!,
               decoration: InputDecoration(
                 labelText: 'issue',
-                prefixIcon: Icon(
-                  Icons.person,
-                  color: Colors.purple,
-                ),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(30.0),
                 ),
+                contentPadding: EdgeInsets.symmetric(vertical: 40)
               ),
             ),
             SizedBox(

@@ -15,64 +15,14 @@ class _MessagesViewState extends State<MessagesView> {
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: const Text('Feedback'),
-          backgroundColor: Colors.purple,
-          centerTitle: true,
-          automaticallyImplyLeading: false,
-        ),
-        body: SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
-          child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                SafeArea(
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 16, right: 16, top: 10),
-                    child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          const Text(
-                            "Feedback",
-                            style: TextStyle(
-                                fontSize: 32, fontWeight: FontWeight.bold),
-                          ),
-                          Container(
-                            padding: const EdgeInsets.only(
-                                left: 8, right: 8, top: 2, bottom: 2),
-                            height: 30,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(30),
-                                color: Colors.purple[50]),
-                            child: Row(
-                              children: <Widget>[
-                                ElevatedButton.icon(
-                                  onPressed: buildFeedback,
-                                  icon: const Icon(
-                                    Icons.add,
-                                    color: Colors.purple,
-                                    size: 20,
-                                  ),
-                                  label: const Text(
-                                    "Add New",
-                                    style: TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ]),
-                  ),
-                ),
-              ]),
-        ));
-  }
 
-  Widget buildFeedback() {
-    return Form(
+    return Scaffold(
+    appBar: AppBar(
+    title:const Text('Feedback'),
+      backgroundColor: Colors.purple,
+      centerTitle: true,
+    ),
+      body:Form(
         key: _formkey,
         child: Column(children: <Widget>[
           const SizedBox(
@@ -134,13 +84,10 @@ class _MessagesViewState extends State<MessagesView> {
             onSaved: (input) => _feedback = input!,
             decoration: InputDecoration(
               labelText: 'Feedback',
-              prefixIcon: const Icon(
-                Icons.person,
-                color: Colors.purple,
-              ),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(30.0),
               ),
+              contentPadding: EdgeInsets.symmetric(vertical: 40)
             ),
           ),
           const SizedBox(
@@ -155,7 +102,10 @@ class _MessagesViewState extends State<MessagesView> {
                     borderRadius: BorderRadius.circular(32.0)),
                 minimumSize: const Size(200, 50)),
           ),
-        ]));
+        ]
+        )
+      )
+    );
   }
 
   Future<void> sendFeedback() async {

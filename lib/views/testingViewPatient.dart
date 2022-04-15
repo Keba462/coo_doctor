@@ -21,7 +21,7 @@ class _TestingViewPatientState extends State<TestingViewPatient> {
   FirebaseCustomModel? model;
 
   late Future<String> _loaded;
-  int? _age;
+
   double? _temp;
   final fields = [
     DatasetFields(title: 'Heart disease'),
@@ -31,6 +31,7 @@ class _TestingViewPatientState extends State<TestingViewPatient> {
     DatasetFields(title: 'Diabetes'),
     DatasetFields(title: 'Stroke or reduced immunity'),
   ];
+  List<DatasetFields> selectedSymptoms = [];
   final symptoms = [
     DatasetFields(title: 'Dry Cough'),
     DatasetFields(title: 'Sore Throat'),
@@ -43,6 +44,7 @@ class _TestingViewPatientState extends State<TestingViewPatient> {
     DatasetFields(title: 'Symptoms Progress'),
     DatasetFields(title: 'Travel History to afftected Country'),
   ];
+  List<DatasetFields> selectedFieldItems = [];
 
   @override
   Widget build(BuildContext context) {
@@ -143,32 +145,73 @@ class _TestingViewPatientState extends State<TestingViewPatient> {
   Widget buildSelectSymptomsRowWidget(BuildContext context) {
     return Wrap(
       children: <Widget>[
-        ...symptoms.map(buildSingleCheckbox).toList(),
+        ...symptoms.map(buildSingleCheckboxFields).toList(),
       ],
     );
   }
 
   Widget buildSelectUnderlyingRowWidget(BuildContext context) {
     return Wrap(children: [
-      ...fields.map(buildSingleCheckbox).toList(),
+      ...fields.map(buildSingleCheckboxSymptoms).toList(),
     ]);
   }
 
-  Widget buildSingleCheckbox(DatasetFields field) => buildCheckbox(
-        field: field,
-        onClicked: () {
-          setState(() {
-            final newValue = !field.value;
-            field.value = newValue;
-          });
-        },
-      );
+  Widget buildSingleCheckboxFields(DatasetFields field) {
+    return buildCheckbox(
+      field: field,
+      onClicked: () {
+        setState(() {
+          final newValue = !field.value;
+          field.value = newValue;
+          if(field.value == true){
+            selectedFieldItems.add(field);
+          }else{
+            selectedFieldItems.remove(field);
+          }
+
+        });
+      },
+    );
+  }
+
+  Widget buildSingleCheckboxSymptoms(DatasetFields field) {
+    return buildCheckbox(
+      field: field,
+      onClicked: () {
+        setState(() {
+          final newValue = !field.value;
+          field.value = newValue;
+          if(field.value == true){
+            selectedSymptoms.add(field);
+          }else{
+            selectedSymptoms.remove(field);
+          }
+
+
+        });
+      },
+    );
+  }
 
   Widget buildSubmitButton(BuildContext context) {
     return Column(
       children: <Widget>[
         ElevatedButton(
-          onPressed: () {},
+          onPressed: () {
+            _showSymptomsDialog();
+            if (kDebugMode) {
+              for (var field in fields) {
+                if (field.value == true) {
+                  print("Selected Fields: ${field.title}");
+                }
+              }
+              for (var symptom in symptoms) {
+                if (symptom.value == true) {
+                  print("Selected Symptoms: ${symptom.title}");
+                }
+              }
+            }
+          },
           child: const Text('submit'),
           style: ElevatedButton.styleFrom(
               primary: Colors.purple,
@@ -311,5 +354,63 @@ class _TestingViewPatientState extends State<TestingViewPatient> {
       print('The program will not be resumed');
       rethrow;
     }
+  }
+
+  void _showSymptomsDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return AlertDialog(
+          title: const Text("Your  choices"),
+          content: setupAlertDialogContainer(),
+          actions: <Widget>[
+            TextButton(
+              child: const Text("OK"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Widget setupAlertDialogContainer() {
+    return SizedBox(
+      height: 300.0,
+      width: 300.0,
+      child: Column(
+
+        children: [
+          const Text('Your Symptoms are:',style: TextStyle(fontWeight: FontWeight.bold),),
+          Expanded(
+            child: ListView.builder(
+              itemCount: selectedSymptoms.length,
+              itemBuilder: (context, index) {
+                  return ListTile(
+                    title: Text(selectedSymptoms[index].title),
+                  );
+
+              },
+              shrinkWrap: true,
+            ),
+          ),
+          //const SizedBox(height: 2.0,),
+          const Text('Your Underlying conditions are:',style: TextStyle(fontWeight: FontWeight.bold),),
+          ListView.builder(
+            itemCount: selectedFieldItems.length,
+            itemBuilder: (context, index) {
+                return ListTile(
+                  title: Text(selectedFieldItems[index].title),
+                );
+
+            },
+            shrinkWrap: true,
+          ),
+        ],
+      ),
+    );
   }
 }
