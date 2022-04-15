@@ -1,4 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+
+import '../models/covid_user.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -7,123 +12,199 @@ class ProfilePage extends StatefulWidget {
   State<ProfilePage> createState() => _ProfilePageState();
 }
 
-class _ProfilePageState extends State<ProfilePage> {
-  @override
-  Widget build(BuildContext context) {
-    var user;
-    return SingleChildScrollView(
-        child: SizedBox(
-      width: MediaQuery.of(context).size.width,
-      child: Column(children: <Widget>[
-        FutureBuilder(
-          future: null,
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.done) {
-              return displayUserInformation(context, snapshot);
-            } else {
-              return const CircularProgressIndicator();
-            }
-          },
-        )
-      ]),
-    ));
+class _ProfilePageState extends State<ProfilePage>  with SingleTickerProviderStateMixin {
+
+  final CollectionReference users = FirebaseFirestore.instance.collection(
+      'users');
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  bool _status = true;
+  final FocusNode myFocusNode = FocusNode();
+  final TextEditingController _nameTextController = TextEditingController();
+late String _names;
+late CovidUser covidUser;
+
+@override
+  void initState() {
+   getProfileInfo();
+  _status = true;
+    super.initState();
   }
 
-  Widget displayUserInformation(context, snapshot) {
-    final user = snapshot.data;
-    return Column(
-      children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text(
-            "Name $user.full names}",
-            style: const TextStyle(fontSize: 20.0),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text(
-            "Omang/Passportno:$user.idnummber}",
-            style: const TextStyle(fontSize: 20.0),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text(
-            "Email $user.email}",
-            style: const TextStyle(fontSize: 20.0),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text(
-            "Password $user.password}",
-            style: const TextStyle(fontSize: 20.0),
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-/*
-class ProfilePage extends StatelessWidget {
-  final String? myEmail, myPassword, myIdnumber, myNames;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          centerTitle: true,
-          title: const Text('Profile'),
-          backgroundColor: Colors.purple),
-      body: Center(
-        child: FutureBuilder(
-            future: fetch(),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState != ConnectionState.done) {
-                return const Text('Loading data please wait');
-              }
-              return Text("Full names:$myEmail");
-            }),
+        title: const Text('Profile '),
+        automaticallyImplyLeading: false,
+        backgroundColor: Colors.purple,
+        actions:  [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: IconButton(icon: const Icon(Icons.edit), onPressed: (){onEditPressed();}
+            ,),
+          ),
+        ],
       ),
-      */
-/*
-      body:StreamBuilder<DocumentSnapshot>(stream: FirebaseFirestore.instance.collection('users').doc(user!.uid).snapshots(),
-
-      builder:(BuildContext context,AsyncSnapshot snapshot){
-        if(snapshot.hasData){
-          return  Text(snapshot.data!["role"]);
-
-        }
-       return Text('Error :${snapshot.error}');
-
-      }
-      ),*/ /*
-
+      body: SingleChildScrollView(
+          child: SizedBox(
+            width: MediaQuery
+                .of(context)
+                .size
+                .width,
+            child: Column(children: <Widget>[
+              displayUserInformation()
+            ]),
+          )),
     );
   }
 
-  fetch() async {
-    final user = await FirebaseAuth.instance.currentUser;
-    if (user != null) {
-      await FirebaseFirestore.instance
-          .collection('users')
-          .doc(user.uid)
-          .get()
-          .then((ds) {
-        myNames = ds.data()!['full names'];
-        myIdnumber = ds.data()!['idnumber'];
-        myEmail = ds.data()!['email'];
-        myPassword = ds.data()!['password'];
+  Widget displayUserInformation() {
+    return Column(
+      children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: TextField(
+            controller: _nameTextController,
+            decoration: const InputDecoration(
+              hintText: 'Full names',
+              labelText: 'Full Names',
+              border: OutlineInputBorder(),
+            ),
+            enabled: !_status,
+            autofocus: !_status,
+            onChanged: (text) {
+              _names = text;
+            },
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text(
+            "Omang/Passportno: ${covidUser.omang}",
+            style: const TextStyle(fontSize: 20.0),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text(
+            "Email: ${covidUser.email}",
+            style: const TextStyle(fontSize: 20.0),
+          ),
+        ),
 
-        print(myNames);
-        print(myIdnumber);
-        print(myEmail);
-        print(myPassword);
-      }).catchError((e) {
-        print(e);
-      });
+        !_status ? _getActionButtons() : Container(),
+
+      ],
+    );
+  }
+
+
+  Future<void> getProfileInfo() async {
+    return await users.doc(_auth.currentUser!.uid)
+        .withConverter<CovidUser>(
+      fromFirestore: (snapshots, _) => CovidUser.fromJson(snapshots.data()!),
+      toFirestore: (covidUser, _) => covidUser.toJson(),).get().then((value) {
+      if (kDebugMode) {
+        print('UserID: ${_auth.currentUser!.uid}');
+        print("Data: ${value.data().toString()}");
+      }
+setState(() {
+  covidUser = CovidUser.fromJson(value.data()!.toJson());
+  _nameTextController.text = covidUser.fullName;
+});
+
+    });
+  }
+
+  Widget showNameInput() {
+    return Padding(
+        padding: const EdgeInsets.only(left: 25.0, right: 25.0, top: 10.0),
+        child: Row(
+          mainAxisSize: MainAxisSize.max,
+          children: <Widget>[
+            Flexible(
+              child: TextField(
+                controller: _nameTextController,
+                decoration: const InputDecoration(
+                  hintText: 'Full names',
+                  labelText: 'Full Names',
+                  border: OutlineInputBorder(),
+                ),
+                enabled: !_status,
+                autofocus: !_status,
+                onChanged: (text) {
+                  _names = text;
+                },
+              ),
+            ),
+          ],
+        ));
+  }
+
+  Widget _getActionButtons() {
+    return Padding(
+      padding: const EdgeInsets.only(left: 25.0, right: 25.0, top: 45.0),
+      child: Row(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: <Widget>[
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.only(right: 10.0),
+              child: ElevatedButton(
+                child: const Text("Save"),
+                onPressed: () {
+                  setState(() {
+                    _status = true;
+                FirebaseFirestore.instance
+                    .collection("users")
+                    .doc(_auth.currentUser!.uid).set(covidUser.toJson()).whenComplete(() => print('Complete')).onError((error, stackTrace) => print("Could not complete"));
+
+                    // UserUpdateInfo info = UserUpdateInfo();
+
+                    FocusScope.of(context).requestFocus(FocusNode());
+                  });
+                },
+              ),
+            ),
+            flex: 2,
+          ),
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.only(left: 10.0),
+              child: ElevatedButton(
+                child: const Text("Cancel"),
+                onPressed: () {
+                  setState(() {
+                    _status = true;
+                    FocusScope.of(context).requestFocus(FocusNode());
+                  });
+                },
+              ),
+            ),
+            flex: 2,
+          ),
+        ],
+      ),
+    );
+  }
+
+  onEditPressed() {
+    setState(() {
+      _status = false;
+    });
+
+    void disposeControllers() {
+      _nameTextController.dispose();
+    }
+
+
+    @override
+    void dispose() {
+      // Clean up the controller when the Widget is disposed
+      myFocusNode.dispose();
+      disposeControllers();
+      super.dispose();
     }
   }
 }
-*/

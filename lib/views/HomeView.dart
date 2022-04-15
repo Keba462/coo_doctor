@@ -38,7 +38,7 @@ class _HomeViewState extends State<HomeView> {
             leading: const Icon(Icons.account_circle),
             title: const Text('Profile'),
             onTap: () {
-              Navigator.pushReplacement(context,
+              Navigator.push(context,
                   MaterialPageRoute(builder: (context) => const ProfilePage()));
             },
           ),

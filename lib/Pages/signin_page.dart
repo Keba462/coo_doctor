@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:coo_doctor/Pages/login_page.dart';
+import 'package:coo_doctor/models/covid_user.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class SignUp extends StatefulWidget {
@@ -13,7 +15,7 @@ class SignUp extends StatefulWidget {
 class _SignUpState extends State<SignUp> {
   bool _obscureText = true;
   String _role = 'Patient';
-  String? _email, _password, _idnumber, _names;
+  late String _email, _password, _idnumber, _names;
   String title = "Role";
 
   TextEditingController password = TextEditingController();
@@ -23,14 +25,14 @@ class _SignUpState extends State<SignUp> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Sign Up'),
+        title: const Text('Sign Up'),
         backgroundColor: Colors.purple,
         centerTitle: true,
       ),
       body: Form(
         key: _formkey,
         child: Column(children: <Widget>[
-          SizedBox(
+          const SizedBox(
             height: 10.0,
           ),
           TextFormField(
@@ -44,7 +46,7 @@ class _SignUpState extends State<SignUp> {
             onSaved: (input) => _idnumber = input!,
             decoration: InputDecoration(
               labelText: 'Idnmuber/PassportNo',
-              prefixIcon: Icon(
+              prefixIcon: const Icon(
                 Icons.person,
                 color: Colors.purple,
               ),
@@ -53,7 +55,7 @@ class _SignUpState extends State<SignUp> {
               ),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 20.0,
           ),
           TextFormField(
@@ -65,7 +67,7 @@ class _SignUpState extends State<SignUp> {
             onSaved: (input) => _names = input!,
             decoration: InputDecoration(
               labelText: 'Names',
-              prefixIcon: Icon(
+              prefixIcon: const Icon(
                 Icons.person,
                 color: Colors.purple,
               ),
@@ -74,7 +76,7 @@ class _SignUpState extends State<SignUp> {
               ),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 20.0,
           ),
           TextFormField(
@@ -88,7 +90,7 @@ class _SignUpState extends State<SignUp> {
             onSaved: (input) => _email = input!,
             decoration: InputDecoration(
               labelText: 'Email',
-              prefixIcon: Icon(
+              prefixIcon: const Icon(
                 Icons.person,
                 color: Colors.purple,
               ),
@@ -97,7 +99,7 @@ class _SignUpState extends State<SignUp> {
               ),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 20.0,
           ),
           TextFormField(
@@ -110,7 +112,7 @@ class _SignUpState extends State<SignUp> {
             onSaved: (input) => _password = input!,
             decoration: InputDecoration(
               labelText: 'Password',
-              prefixIcon: Icon(
+              prefixIcon: const Icon(
                 Icons.lock_outlined,
                 color: Colors.purple,
               ),
@@ -120,7 +122,7 @@ class _SignUpState extends State<SignUp> {
             ),
             obscureText: true,
           ),
-          SizedBox(
+          const SizedBox(
             height: 20.0,
           ),
           TextFormField(
@@ -128,8 +130,12 @@ class _SignUpState extends State<SignUp> {
               if (input == "") {
                 return 'please re-enter password';
               }
-              print(password.text);
-              print(confirmpassword.text);
+              if (kDebugMode) {
+                print(password.text);
+              }
+              if (kDebugMode) {
+                print(confirmpassword.text);
+              }
               if (password.text != confirmpassword.text) {
                 return "passwords are not a match";
               }
@@ -139,7 +145,7 @@ class _SignUpState extends State<SignUp> {
             obscureText: _obscureText,
             decoration: InputDecoration(
               labelText: 'Confirm Password',
-              prefixIcon: Icon(
+              prefixIcon: const Icon(
                 Icons.lock_outlined,
                 color: Colors.purple,
               ),
@@ -156,7 +162,7 @@ class _SignUpState extends State<SignUp> {
                   }),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 10.0,
           ),
           DropdownButton<String>(
@@ -181,23 +187,23 @@ class _SignUpState extends State<SignUp> {
               );
             }).toList(),
           ),
-          SizedBox(
+          const SizedBox(
             height: 20.0,
           ),
           ElevatedButton(
             onPressed: signUp,
-            child: Text('Sign up'),
+            child: const Text('Sign up'),
             style: ElevatedButton.styleFrom(
                 primary: Colors.purple,
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(32.0)),
-                minimumSize: Size(200, 50)),
+                minimumSize: const Size(200, 50)),
           ),
-          SizedBox(
+          const SizedBox(
             height: 10.0,
           ),
           Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
-            Text(
+            const Text(
               'Already have an Account?',
               style: TextStyle(color: Colors.purple),
             ),
@@ -205,9 +211,9 @@ class _SignUpState extends State<SignUp> {
               onPressed: () {
                 // Respond to button press
                 Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => LogIn()));
+                    context, MaterialPageRoute(builder: (context) => const LogIn()));
               },
-              child: Text("login"),
+              child: const Text("login"),
               style: OutlinedButton.styleFrom(
                   primary: Colors.purple,
                   shape: RoundedRectangleBorder(
@@ -219,11 +225,6 @@ class _SignUpState extends State<SignUp> {
     );
   }
 
-  /*
-  StoreNewUser(user) async{
-    var firebaseUser = await FirebaseAuth.instance.currentUser();
-    FirebaseFirestore.instance.collection('users').document(firebaseUser.uid).setData({'email':user.email,'uid':user.uid}).then
-  }*/
   Future<void> signUp() async {
     final formState = _formkey.currentState;
     if (formState!.validate()) {
@@ -232,27 +233,27 @@ class _SignUpState extends State<SignUp> {
         //var firebaseUser = await FirebaseAuth.instance.currentUser!();
         await FirebaseAuth.instance
             .createUserWithEmailAndPassword(
-                email: _email ?? "", password: _password ?? "")
+                email: _email, password: _password)
             .then((value) {
-          FirebaseFirestore.instance.collection('users').doc().set(
-            {
-              "email": _email,
-              "password": _password,
-              "idnumber": _idnumber,
-              "full names": _names,
-              "role": _role,
-            },
+          FirebaseFirestore.instance.collection('users').doc(value.user!.uid).set(
+            CovidUser(omang: _idnumber, fullName: _names, email: _email, role: _role).toJson(),
           );
-          print('created new account');
+          if (kDebugMode) {
+            print('created new account');
+          }
           Navigator.pushReplacement(
-              context, MaterialPageRoute(builder: (context) => LogIn()));
+              context, MaterialPageRoute(builder: (context) => const LogIn()));
         });
         //user!.sendEmailVerification();
         // ignore: prefer_const_constructors
 
       } on FirebaseAuthException catch (e) {
-        print('Failed with error code: ${e.code}');
-        print(e);
+        if (kDebugMode) {
+          print('Failed with error code: ${e.code}');
+        }
+        if (kDebugMode) {
+          print(e);
+        }
       }
     }
   }

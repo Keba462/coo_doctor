@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class MessagesView extends StatefulWidget {
@@ -16,28 +17,29 @@ class _MessagesViewState extends State<MessagesView> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('Feedback'),
+          title: const Text('Feedback'),
           backgroundColor: Colors.purple,
           centerTitle: true,
+          automaticallyImplyLeading: false,
         ),
         body: SingleChildScrollView(
-          physics: BouncingScrollPhysics(),
+          physics: const BouncingScrollPhysics(),
           child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 SafeArea(
                   child: Padding(
-                    padding: EdgeInsets.only(left: 16, right: 16, top: 10),
+                    padding: const EdgeInsets.only(left: 16, right: 16, top: 10),
                     child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
-                          Text(
+                          const Text(
                             "Feedback",
                             style: TextStyle(
                                 fontSize: 32, fontWeight: FontWeight.bold),
                           ),
                           Container(
-                            padding: EdgeInsets.only(
+                            padding: const EdgeInsets.only(
                                 left: 8, right: 8, top: 2, bottom: 2),
                             height: 30,
                             decoration: BoxDecoration(
@@ -46,13 +48,13 @@ class _MessagesViewState extends State<MessagesView> {
                             child: Row(
                               children: <Widget>[
                                 ElevatedButton.icon(
-                                  onPressed: () {},
-                                  icon: Icon(
+                                  onPressed: buildFeedback,
+                                  icon: const Icon(
                                     Icons.add,
                                     color: Colors.purple,
                                     size: 20,
                                   ),
-                                  label: Text(
+                                  label: const Text(
                                     "Add New",
                                     style: TextStyle(
                                         fontSize: 14,
@@ -69,11 +71,11 @@ class _MessagesViewState extends State<MessagesView> {
         ));
   }
 
-  Widget BuildFeedback() {
+  Widget buildFeedback() {
     return Form(
         key: _formkey,
         child: Column(children: <Widget>[
-          SizedBox(
+          const SizedBox(
             height: 10.0,
           ),
           TextFormField(
@@ -87,7 +89,7 @@ class _MessagesViewState extends State<MessagesView> {
             onSaved: (input) => _emailsender = input!,
             decoration: InputDecoration(
               labelText: 'YourEmail',
-              prefixIcon: Icon(
+              prefixIcon: const Icon(
                 Icons.person,
                 color: Colors.purple,
               ),
@@ -96,7 +98,7 @@ class _MessagesViewState extends State<MessagesView> {
               ),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 20.0,
           ),
           TextFormField(
@@ -110,7 +112,7 @@ class _MessagesViewState extends State<MessagesView> {
             onSaved: (input) => _emailreceiver = input!,
             decoration: InputDecoration(
               labelText: 'ReceiversEmail',
-              prefixIcon: Icon(
+              prefixIcon: const Icon(
                 Icons.person,
                 color: Colors.purple,
               ),
@@ -119,7 +121,7 @@ class _MessagesViewState extends State<MessagesView> {
               ),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 20.0,
           ),
           TextFormField(
@@ -132,7 +134,7 @@ class _MessagesViewState extends State<MessagesView> {
             onSaved: (input) => _feedback = input!,
             decoration: InputDecoration(
               labelText: 'Feedback',
-              prefixIcon: Icon(
+              prefixIcon: const Icon(
                 Icons.person,
                 color: Colors.purple,
               ),
@@ -141,17 +143,17 @@ class _MessagesViewState extends State<MessagesView> {
               ),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 20.0,
           ),
           ElevatedButton(
             onPressed: sendFeedback,
-            child: Text('Send'),
+            child: const Text('Send'),
             style: ElevatedButton.styleFrom(
                 primary: Colors.purple,
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(32.0)),
-                minimumSize: Size(200, 50)),
+                minimumSize: const Size(200, 50)),
           ),
         ]));
   }
@@ -167,9 +169,11 @@ class _MessagesViewState extends State<MessagesView> {
         "ReceiverEmail": _emailreceiver,
         "Message": _feedback,
       });
-      print('Sent Feedback');
+      if (kDebugMode) {
+        print('Sent Feedback');
+      }
       Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => MessagesView()));
+          context, MaterialPageRoute(builder: (context) => const MessagesView()));
     } catch (e) {
       print(e);
     }
