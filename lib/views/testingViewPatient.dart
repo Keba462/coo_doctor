@@ -384,7 +384,7 @@ class _TestingViewPatientState extends State<TestingViewPatient> {
       child: Column(
 
         children: [
-          const Text('Your Symptoms are:',style: TextStyle(fontWeight: FontWeight.bold),),
+          const Text('Your Underlying conditions are:',style: TextStyle(fontWeight: FontWeight.bold),),
           Expanded(
             child: ListView.builder(
               itemCount: selectedSymptoms.length,
@@ -398,7 +398,7 @@ class _TestingViewPatientState extends State<TestingViewPatient> {
             ),
           ),
           //const SizedBox(height: 2.0,),
-          const Text('Your Underlying conditions are:',style: TextStyle(fontWeight: FontWeight.bold),),
+          const Text('Your Symptoms are:',style: TextStyle(fontWeight: FontWeight.bold),),
           ListView.builder(
             itemCount: selectedFieldItems.length,
             itemBuilder: (context, index) {

@@ -17,6 +17,7 @@ class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: const Text('Home '),
         backgroundColor: Colors.purple,
@@ -61,9 +62,8 @@ class _HomeViewState extends State<HomeView> {
           )
         ],
       )),
-      body: Stack(
-        children: <Widget>[
-          Column(
+      body: SingleChildScrollView(
+        child:Column(
             children: <Widget>[
               Flexible(
                 child: GridView.count(
@@ -233,7 +233,6 @@ class _HomeViewState extends State<HomeView> {
               )
             ],
           )
-        ],
       ),
     );
   }

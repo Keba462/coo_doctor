@@ -68,7 +68,7 @@ late CovidUser covidUser;
             decoration: const InputDecoration(
               hintText: 'Full names',
               labelText: 'Full Names',
-              border: OutlineInputBorder(),
+             border: OutlineInputBorder( ),
             ),
             enabled: !_status,
             autofocus: !_status,
@@ -153,6 +153,11 @@ setState(() {
               padding: const EdgeInsets.only(right: 10.0),
               child: ElevatedButton(
                 child: const Text("Save"),
+                 style: ElevatedButton.styleFrom(
+                primary: Colors.purple,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(32.0)),
+                minimumSize: const Size(200, 50)),
                 onPressed: () {
                   setState(() {
                     _status = true;
@@ -174,6 +179,11 @@ setState(() {
               padding: const EdgeInsets.only(left: 10.0),
               child: ElevatedButton(
                 child: const Text("Cancel"),
+                 style: ElevatedButton.styleFrom(
+                primary: Colors.purple,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(32.0)),
+                minimumSize: const Size(200, 50)),
                 onPressed: () {
                   setState(() {
                     _status = true;
