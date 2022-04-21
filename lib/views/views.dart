@@ -1,9 +1,9 @@
-export 'HomeView.dart';
-export 'MessagesView.dart';
-export 'NavView.dart';
-export 'ProtocolView.dart';
+export 'home_view.dart';
+export 'messages_view.dart';
+export 'nav_view.dart';
+export 'protocol_view.dart';
 export 'knowledgeView.dart';
 export 'locationView.dart';
-export 'reportsView.dart';
-export 'testingViewDoctor.dart';
-export 'testingViewPatient.dart';
+export 'reports_view.dart';
+export 'testing_view_doctor.dart';
+export 'testing_view_patient.dart';

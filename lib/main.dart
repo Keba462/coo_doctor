@@ -10,23 +10,23 @@ Future<void> main() async{
    await Firebase.initializeApp(
      options:DefaultFirebaseOptions.currentPlatform,
    );
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
 
- MyApp({Key? key}) : super(key: key);
+ const MyApp({Key? key}) : super(key: key);
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Co_Doctor',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
-       
         primarySwatch: Colors.blue,
       ),
-      home: WelcomPage()
+      home: const WelcomPage()
     );
   }
 }
@@ -56,21 +56,21 @@ class _WelcomPageState extends State<WelcomPage> {
                child:Column(
                  children:<Widget>[
                    logoWidget("assets/logo.png"),
-                   Text('Co-Doctor is an application which makes life easier in this Covid-19 Era So enjoy!!!',style:TextStyle(fontSize: 14,color: Colors.white),),
-                   SizedBox(
+                   const Text('Co-Doctor is an application which makes life easier in this Covid-19 Era So enjoy!!!',style:TextStyle(fontSize: 14,color: Colors.white),),
+                   const SizedBox(
                      height:30,
                    ),
                    ElevatedButton(
                       
                     onPressed:(){
-                       Navigator.push(context, MaterialPageRoute(builder: (context) => LogIn()));
+                       Navigator.push(context, MaterialPageRoute(builder: (context) => const LogIn()));
                     }, 
-                    child: Text('Welcome'),
+                    child: const Text('Welcome'),
                    style: ElevatedButton.styleFrom(
                       primary: Colors.purple,
                       shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(32.0)),
-                      minimumSize: Size(500, 70)
+                      minimumSize: const Size(500, 70)
             
                        ),
                    )
