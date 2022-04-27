@@ -96,7 +96,12 @@ class _HomeViewState extends State<HomeView> {
                         width: 100,
                         height: 100,
                         padding: const EdgeInsets.all(8),
-                        child: Card(
+                        
+                        child:  GestureDetector(
+                          onTap: (){
+                            // Navigator.push(context, MaterialPageRoute(builder: (context) => ForgotPage()));
+                           },
+                          child:Card(
                             elevation: 2,
                             child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -116,12 +121,21 @@ class _HomeViewState extends State<HomeView> {
                                       }),
                                   ),
                                 ])),
+                        )
                       ),
                       Container(
                         width: 100,
                         height: 100,
                         padding: const EdgeInsets.all(8),
-                        child: Card(
+                        child:GestureDetector(
+                          onTap: (){
+                            Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                     (covidUser.role=='Doctor')?const TestingViewDoctor():const TestingViewPatient()));
+                           },
+                          child: Card(
                             elevation: 2,
                             child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -144,12 +158,16 @@ class _HomeViewState extends State<HomeView> {
                                                      (covidUser.role=='Doctor')?const TestingViewDoctor():const TestingViewPatient()));
                                       }),
                                  )
-                                ])),
-                      ),
+                                ])),)
+                        ),
                       Container(
                         width: 100,
                         height: 100,
                         padding: const EdgeInsets.all(8),
+                        child:GestureDetector(
+                          onTap:(){
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => const ReportsPage()));
+                                      } ,
                         child: Card(
                             elevation: 2,
                             child: Column(
@@ -169,12 +187,20 @@ class _HomeViewState extends State<HomeView> {
                                         Navigator.push(context, MaterialPageRoute(builder: (context) => const ReportsPage()));
                                       })
                                   ),
-                                ])),
+                                ])),)
                       ),
                       Container(
                         width: 100,
                         height: 100,
                         padding: const EdgeInsets.all(8),
+                        child:GestureDetector(
+                          onTap:(){
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    const Map()));
+                                      },
                         child: Card(
                             elevation: 2,
                             child: Column(
@@ -198,12 +224,16 @@ class _HomeViewState extends State<HomeView> {
                                                     const Map()));
                                       }),
                                   ),
-                                ])),
+                                ])),)
                       ),
                       Container(
                         width: 100,
                         height: 100,
                         padding: const EdgeInsets.all(8),
+                        child:GestureDetector(
+                          onTap: (){
+                                        Navigator.push(context, MaterialPageRoute(builder: (context) => const SettingsPage()));
+                                      },
                         child: Card(
                             elevation: 2,
                             child: Column(
@@ -223,12 +253,20 @@ class _HomeViewState extends State<HomeView> {
                                         Navigator.push(context, MaterialPageRoute(builder: (context) => const SettingsPage()));
                                       }),
                                       ),
-                                ])),
+                                ])),)
                       ),
                       Container(
                         width: 100,
                         height: 100,
                         padding: const EdgeInsets.all(8),
+                        child:GestureDetector(
+                          onTap: (){
+                               //Navigator.push(
+                                             // context,
+                                              //MaterialPageRoute(
+                                                //  builder: (context) =>
+                                                   //   const Map()));
+                          },
                         child: Card(
                             elevation: 2,
                               child: Column(
@@ -253,7 +291,7 @@ class _HomeViewState extends State<HomeView> {
                                         }),
                                    ),
                                   ]),
-                            )),
+                            ),)),
                     ],
                     crossAxisCount: 2),
               )

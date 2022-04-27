@@ -20,31 +20,31 @@ class _TestingViewPatientState extends State<TestingViewPatient> {
 
   FirebaseCustomModel? model;
 
-  late Future<String> _loaded;
+   Future<String>?_loaded;
+  TextEditingController _age = TextEditingController();
+  TextEditingController _temp = TextEditingController();
 
-  double? _temp;
   final fields = [
-    DatasetFields(title: 'Heart disease'),
-    DatasetFields(title: 'Kidney disease'),
-    DatasetFields(title: 'High blood pressure'),
-    DatasetFields(title: 'Lung disease'),
     DatasetFields(title: 'Diabetes'),
+    DatasetFields(title: 'Heart disease'),
+    DatasetFields(title: 'Lung disease'),
     DatasetFields(title: 'Stroke or reduced immunity'),
+    DatasetFields(title: 'High blood pressure'),
+    DatasetFields(title: 'Kidney disease'),
   ];
   List<DatasetFields> selectedSymptoms = [];
   final symptoms = [
     DatasetFields(title: 'Dry Cough'),
     DatasetFields(title: 'Sore Throat'),
-    DatasetFields(title: 'Pain in the chest'),
-    DatasetFields(title: 'Breathing Problems'),
-    DatasetFields(title: 'Loss of sense of smell'),
     DatasetFields(title: 'Weakness'),
+    DatasetFields(title: 'Breathing Problems'),
     DatasetFields(title: 'Drowsiness'),
-    DatasetFields(title: 'Change in apetite'),
-    DatasetFields(title: 'Symptoms Progress'),
+    DatasetFields(title: 'Pain in the chest'),
     DatasetFields(title: 'Travel History to afftected Country'),
+    DatasetFields(title: 'Symptoms Progress'),
   ];
   List<DatasetFields> selectedFieldItems = [];
+  List symtomsList =<bool> [];
 
   @override
   Widget build(BuildContext context) {
@@ -83,6 +83,7 @@ class _TestingViewPatientState extends State<TestingViewPatient> {
   Widget buildInputDetails(BuildContext context) {
     return Column(children: <Widget>[
       TextFormField(
+        controller: _age,
         keyboardType: TextInputType.number,
         inputFormatters: <TextInputFormatter>[
           FilteringTextInputFormatter.allow(RegExp(r'[0-9]{1,3}')),
@@ -97,29 +98,13 @@ class _TestingViewPatientState extends State<TestingViewPatient> {
       const SizedBox(
         height: 10.0,
       ),
-      /*
+      
       TextFormField(
+        controller: _temp,
         keyboardType: TextInputType.number,
         inputFormatters: <TextInputFormatter>[
-          FilteringTextInputFormatter.allow(RegExp(r'[0-9]{1,3}')),
+          FilteringTextInputFormatter.allow(RegExp(r'[3-9]{1,3}')),
         ],
-        decoration: InputDecoration(
-          labelText: 'Your Temperature',
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(30.0),
-          ),
-        ),
-      ),
-      */
-      TextFormField(
-        keyboardType: TextInputType.number,
-        inputFormatters: <TextInputFormatter>[
-          FilteringTextInputFormatter.allow(RegExp(r'[0-9]{1,3}')),
-        ],
-        /*
-        onChanged: (value) {
-          _calculate();
-        },*/
         decoration: InputDecoration(
           labelText: 'Your Temprature',
           border: OutlineInputBorder(
@@ -161,6 +146,7 @@ class _TestingViewPatientState extends State<TestingViewPatient> {
       field: field,
       onClicked: () {
         setState(() {
+          //symtomsList.add(field.value);
           final newValue = !field.value;
           field.value = newValue;
           if(field.value == true){
@@ -181,6 +167,7 @@ class _TestingViewPatientState extends State<TestingViewPatient> {
         setState(() {
           final newValue = !field.value;
           field.value = newValue;
+          //symtomsList.add(field.value);
           if(field.value == true){
             selectedSymptoms.add(field);
           }else{
@@ -199,18 +186,22 @@ class _TestingViewPatientState extends State<TestingViewPatient> {
         ElevatedButton(
           onPressed: () {
             _showSymptomsDialog();
+            
+            symtomsList =[];
             if (kDebugMode) {
+           for (var symptom in symptoms) {
+                 symtomsList.add(symptom.value);
+                  print("Selected Symptoms: ${symptom.value}");
+                
+              }
               for (var field in fields) {
-                if (field.value == true) {
+                symtomsList.add(field.value);
                   print("Selected Fields: ${field.title}");
-                }
+                
               }
-              for (var symptom in symptoms) {
-                if (symptom.value == true) {
-                  print("Selected Symptoms: ${symptom.title}");
-                }
-              }
+            
             }
+            createFeatureList();
           },
           child: const Text('submit'),
           style: ElevatedButton.styleFrom(
@@ -325,9 +316,6 @@ class _TestingViewPatientState extends State<TestingViewPatient> {
     );
   }
 
-  double _calculate() {
-    return (_temp! * 1.8) + 32;
-  }
 
   /// Loads the model into some TF Lite interpreter.
   /// In this case interpreter provided by tflite plugin.
@@ -349,10 +337,161 @@ class _TestingViewPatientState extends State<TestingViewPatient> {
       //     'success');
       return 'Model is loaded';
     } catch (exception) {
-      print(
+      if (kDebugMode) {
+        print(
           'Failed on loading your model to the TFLite interpreter: $exception');
-      print('The program will not be resumed');
+      }
+      if (kDebugMode) {
+        print('The program will not be resumed');
+      }
       rethrow;
+    }
+  }
+
+
+  void _showDiagnosisDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return AlertDialog(
+          title: const Text("Your Diagnosis"),
+          content: setupAlertDialogContainer(),
+          actions: <Widget>[
+            TextButton(
+              child: const Text("OK"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void createFeatureList(){
+    List features =<double>[];
+    String result= "";
+    String result1 = "Low Risk";
+    String result2= "Moderate Risk";
+    String result3 = "High Risk";
+    double age= double.parse(_age.text);
+    double temp= double.parse(_temp.text);
+    features.add(age);
+    features.add(temp);
+    print("list:$symtomsList");
+    for(var list in symtomsList) {
+      if(list == true){
+        list = 1.0;
+      }else if(list == false){
+        list=0.0;
+      }
+      features.add(list);
+      print("feautures:, ${features}");
+      
+        if(features[6] <= 0.50){
+          if(features[11] <= 0.50){
+            if(features[7] <= 0.50){
+              if(features[8] <= 0.50){
+                if(features[3] <= 0.50){
+                  result =result1;
+                  print("result:$result");
+                }
+                else if(features[3] > 0.50){
+                  result =result1;
+                  print("result:$result");
+                }
+              }else if(features[8] > 0.50){
+                if(features[1] <= 37.58){
+                  result =result2;
+                  print("result:$result");
+                }else if(features[1] > 37.58){
+                  result =result1;
+                  print("result:$result");
+                }
+              }  
+            }else if(features[7] > 0.50){
+              if(features[13] <= 0.50){
+                result =result2;
+                  print("result:$result");
+                }else if(features[13] > 0.50){
+                  result =result1;
+                  print("result:$result");
+                }
+            }
+          }else if(features[11] > 0.50){
+            if(features[14] <= 0.50){
+              if(features[3] <= 0.50){
+                result =result2;
+                  print("result:$result");
+                }else if(features[3] > 0.50){
+                  if(features[15] <= 0.50){
+                    result =result1;
+                  print("result:$result");
+                  }else if(features[15] > 0.50){
+                    result =result3;
+                    print("result:$result");
+                  }
+                }
+            }else if(features[14] > 0.50){  
+              result =result3;
+                print("result:$result");
+                }
+          }
+      }else if(features[6] > 0.50){  
+         if(features[7] <= 0.50){  
+           if(features[1] <= 39.25){
+             if(features[0] <= 32.00){
+               result =result2;
+                print("result:$result");
+             } else if(features[0] < 32.00){
+               if(features[0] <= 37.00){
+                 result =result1;
+                  print("result:$result");
+               }else if(features[0] > 37.00){
+                 result =result2;
+                  print("result:$result");
+               } 
+             }
+           }else if(features[1] >39.25){
+             if(features[0] <= 41.00){
+               result =result2;
+                  print("result:$result");
+               }else if(features[0] > 41.00){
+                 result =result3;
+                  print("result:$result");
+               } 
+           }
+         }else if(features[7] > 0.50){
+             if(features[5] <= 0.50){
+               if(features[0] <= 37.50){
+                 result =result1;
+                  print("result:$result2");
+               }else if(features[0] > 37.50){
+                  if(features[10] <= 0.50){
+                    result =result1;
+                  print("result:$result2");
+               }else if(features[10] > 0.50){
+                 result =result1;
+                  print("result:$result3");
+               }} 
+               }else if(features[5] > 0.50){
+                  if(features[9] <= 0.50){
+                     if(features[13] <= 0.5){
+                       result =result1;
+                    print("result:$result3");
+                  } else if(features[13] > 0.5){
+                    result =result2;
+                    print("result:$result2");
+                  }
+                  }else if(features[9] > 0.50){
+                    result =result3;
+                     print("result:$result");
+                  }
+               } 
+           }
+      }   
     }
   }
 
@@ -413,4 +552,29 @@ class _TestingViewPatientState extends State<TestingViewPatient> {
       ),
     );
   }
+  /*
+   Widget setupAlertDialogColumn() {
+    return SizedBox(
+      height: 300.0,
+      width: 300.0,
+      child: Column(
+
+        children: [
+          //const SizedBox(height: 2.0,),
+          const Text('Your Results are: $result1',style: TextStyle(fontWeight: FontWeight.bold),),
+          ListView.builder(
+            itemCount: selectedFieldItems.length,
+            itemBuilder: (context, index) {
+                return ListTile(
+                  title: Text(selectedFieldItems[index].title),
+                );
+
+            },
+            shrinkWrap: true,
+          ),
+        ],
+      ),
+    );
+  }
+  */
 }
