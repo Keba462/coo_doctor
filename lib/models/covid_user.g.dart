@@ -7,6 +7,7 @@ part of 'covid_user.dart';
 // **************************************************************************
 
 CovidUser _$CovidUserFromJson(Map<String, dynamic> json) => CovidUser(
+      userId: json['userId'] as String,
       omang: json['omang'] as String,
       fullName: json['fullName'] as String,
       email: json['email'] as String,
@@ -14,6 +15,7 @@ CovidUser _$CovidUserFromJson(Map<String, dynamic> json) => CovidUser(
     );
 
 Map<String, dynamic> _$CovidUserToJson(CovidUser instance) => <String, dynamic>{
+      'userId': instance.userId,
       'omang': instance.omang,
       'fullName': instance.fullName,
       'email': instance.email,

@@ -7,3 +7,4 @@ export 'locationView.dart';
 export 'reports_view.dart';
 export 'testing_view_doctor.dart';
 export 'testing_view_patient.dart';
+export 'message_page_view.dart';

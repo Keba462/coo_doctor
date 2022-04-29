@@ -99,7 +99,7 @@ class _HomeViewState extends State<HomeView> {
                         
                         child:  GestureDetector(
                           onTap: (){
-                            // Navigator.push(context, MaterialPageRoute(builder: (context) => ForgotPage()));
+                             Navigator.push(context, MaterialPageRoute(builder: (context) => const MessagesScreen()));
                            },
                           child:Card(
                             elevation: 2,
@@ -109,7 +109,7 @@ class _HomeViewState extends State<HomeView> {
                                   CircleAvatar(
                                     backgroundColor: Colors.transparent,
                                     radius: 48.0,
-                                    child: Image.asset('assets/knowledge.png'),
+                                    child: Image.asset('assets/feedback.png'),
                                   ),
                                   Expanded( child:TextButton(
                                       child: const Text('Knowledge'),

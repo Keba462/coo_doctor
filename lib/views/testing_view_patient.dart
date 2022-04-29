@@ -398,38 +398,38 @@ class _TestingViewPatientState extends State<TestingViewPatient> {
                   result =result1;
                   print("result:$result");
                 }
-                else if(features[3] > 0.50){
+                else{
                   result =result1;
                   print("result:$result");
                 }
-              }else if(features[8] > 0.50){
+              }else{
                 if(features[1] <= 37.58){
                   result =result2;
                   print("result:$result");
-                }else if(features[1] > 37.58){
+                }else{
                   result =result1;
                   print("result:$result");
                 }
               }  
-            }else if(features[7] > 0.50){
+            }else{
               if(features[13] <= 0.50){
                 result =result2;
                   print("result:$result");
-                }else if(features[13] > 0.50){
+                }else{
                   result =result1;
                   print("result:$result");
                 }
             }
-          }else if(features[11] > 0.50){
+          }else{
             if(features[14] <= 0.50){
               if(features[3] <= 0.50){
                 result =result2;
                   print("result:$result");
-                }else if(features[3] > 0.50){
+                }else{
                   if(features[15] <= 0.50){
                     result =result1;
                   print("result:$result");
-                  }else if(features[15] > 0.50){
+                  }else{
                     result =result3;
                     print("result:$result");
                   }
@@ -439,53 +439,53 @@ class _TestingViewPatientState extends State<TestingViewPatient> {
                 print("result:$result");
                 }
           }
-      }else if(features[6] > 0.50){  
+      }else{  
          if(features[7] <= 0.50){  
            if(features[1] <= 39.25){
              if(features[0] <= 32.00){
                result =result2;
                 print("result:$result");
-             } else if(features[0] < 32.00){
+             } else{
                if(features[0] <= 37.00){
                  result =result1;
                   print("result:$result");
-               }else if(features[0] > 37.00){
+               }else{
                  result =result2;
                   print("result:$result");
                } 
              }
-           }else if(features[1] >39.25){
+           }else{
              if(features[0] <= 41.00){
                result =result2;
                   print("result:$result");
-               }else if(features[0] > 41.00){
+               }else{
                  result =result3;
                   print("result:$result");
                } 
            }
-         }else if(features[7] > 0.50){
+         }else{
              if(features[5] <= 0.50){
                if(features[0] <= 37.50){
                  result =result1;
                   print("result:$result2");
-               }else if(features[0] > 37.50){
+               }else{
                   if(features[10] <= 0.50){
                     result =result1;
                   print("result:$result2");
-               }else if(features[10] > 0.50){
+               }else{
                  result =result1;
                   print("result:$result3");
                }} 
-               }else if(features[5] > 0.50){
+               }else{
                   if(features[9] <= 0.50){
                      if(features[13] <= 0.5){
                        result =result1;
                     print("result:$result3");
-                  } else if(features[13] > 0.5){
+                  } else{
                     result =result2;
                     print("result:$result2");
                   }
-                  }else if(features[9] > 0.50){
+                  }else{
                     result =result3;
                      print("result:$result");
                   }

@@ -246,7 +246,7 @@ class _SignUpState extends State<SignUp> {
                 email: _email, password: _password)
             .then((value) {
           FirebaseFirestore.instance.collection('users').doc(value.user!.uid).set(
-            CovidUser(omang: _idnumber, fullName: _names, email: _email, role: _role).toJson(),
+            CovidUser(omang: _idnumber, fullName: _names, email: _email, role: _role,userId:value.user!.uid).toJson(),
           );
           if (kDebugMode) {
             print('created new account');

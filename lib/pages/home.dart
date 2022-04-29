@@ -1,12 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:coo_doctor/views/home_view.dart';
-import 'package:coo_doctor/views/messages_view.dart';
-import 'package:coo_doctor/views/protocol_view.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../models/models.dart';
+import '../views/views.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({
@@ -25,19 +23,12 @@ class _HomePageState extends State<HomePage> {
   final List<Widget> _children = [
     const HomeView(),
     const ProtocolView(),
-    const MessagesView(),
+    const KnowledgeView(),
   ];
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return Scaffold(
-        /*
-      appBar: AppBar(
-        title: Text('Home '),
-         backgroundColor: Colors.purple,
-        centerTitle: true,
-        ),
-        */
         body: _children[_currentIndex],
         bottomNavigationBar: BottomNavigationBar(
             backgroundColor: Colors.purple,
@@ -55,7 +46,7 @@ class _HomePageState extends State<HomePage> {
                 label: 'Protocols',
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.mail),
+                icon: Icon(Icons.interests_outlined),
                 label: 'Feedback',
               ),
             ]));
