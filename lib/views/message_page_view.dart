@@ -32,7 +32,7 @@ class _MessagesScreenState extends State<MessagesScreen> {
 
     return Scaffold(
        appBar: AppBar(
-         title: Text('Feedbacks'),
+         title: const Text('Feedbacks'),
         backgroundColor: Colors.purple,
         centerTitle: true,
       ),
@@ -84,7 +84,9 @@ class _MessagesScreenState extends State<MessagesScreen> {
                     builder: (context) => MessagesView(
                       peerId: userChat.userId,
                       peerNickname: userChat.fullName,
-                    )));
+                    )
+                    )
+                    );
           },
           child: ListTile(
             leading:  const Icon(
@@ -92,7 +94,7 @@ class _MessagesScreenState extends State<MessagesScreen> {
               size: 50,
             ),
             title: Text(
-              userChat.fullName,
+              userChat.fullName, 
               style: const TextStyle(color: Colors.white),
             ),
           ),
