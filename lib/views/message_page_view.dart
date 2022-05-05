@@ -1,10 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:coo_doctor/views/messages_view.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../models/models.dart';
-import '../views/views.dart';
 
+import '../models/models.dart';
+import 'messages_view.dart';
 
 class MessagesScreen extends StatefulWidget {
   const MessagesScreen({Key? key}) : super(key: key);
@@ -31,10 +32,11 @@ class _MessagesScreenState extends State<MessagesScreen> {
   Widget build(BuildContext context) {
 
     return Scaffold(
-       appBar: AppBar(
-         title: const Text('Feedbacks'),
-        backgroundColor: Colors.purple,
+      appBar: AppBar(
+        title: const Text('Feedback'),
+         backgroundColor: Colors.purple,
         centerTitle: true,
+    
       ),
       body: StreamBuilder<QuerySnapshot>(
         stream: messageProvider.getFirestoreData("users",_limit),
@@ -84,18 +86,17 @@ class _MessagesScreenState extends State<MessagesScreen> {
                     builder: (context) => MessagesView(
                       peerId: userChat.userId,
                       peerNickname: userChat.fullName,
-                    )
-                    )
-                    );
+                    )));
           },
           child: ListTile(
             leading:  const Icon(
               Icons.account_circle,
+              color:Colors.black,
               size: 50,
             ),
             title: Text(
-              userChat.fullName, 
-              style: const TextStyle(color: Colors.white),
+              userChat.fullName,
+              style: const TextStyle(color: Colors.black),
             ),
           ),
         );
@@ -104,6 +105,8 @@ class _MessagesScreenState extends State<MessagesScreen> {
       return const SizedBox.shrink();
     }
   }
+
+
 
   void scrollListener() {
     if (scrollController.offset >= scrollController.position.maxScrollExtent &&
@@ -120,13 +123,13 @@ class MessagesProvider {
 
   MessagesProvider({required this.firebaseFirestore});
 
-  Future<void> updateFirestoreData( String collectionPath, String path, Map<String, dynamic> updateData) {
+  Future<void> updateFirestoreData(
+      String collectionPath, String path, Map<String, dynamic> updateData) {
     return firebaseFirestore
         .collection(collectionPath)
         .doc(path)
         .update(updateData);
   }
-  
 
   Stream<QuerySnapshot> getFirestoreData(
       String collectionPath, int limit) {

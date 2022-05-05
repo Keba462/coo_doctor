@@ -21,7 +21,7 @@ class _ProfilePageState extends State<ProfilePage>  with SingleTickerProviderSta
   final FocusNode myFocusNode = FocusNode();
   final TextEditingController _nameTextController = TextEditingController();
 late String _names;
- CovidUser? covidUser;
+late CovidUser covidUser;
 
 @override
   void initState() {
@@ -80,21 +80,21 @@ late String _names;
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: Text(
-            "Omang/Passportno: ${covidUser!.omang}",
+            "Omang/Passportno: ${covidUser.omang}",
             style: const TextStyle(fontSize: 20.0),
           ),
         ),
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: Text(
-            "Email: ${covidUser!.email}",
+            "Email: ${covidUser.email}",
             style: const TextStyle(fontSize: 20.0),
           ),
         ),
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: Text(
-            "Role: ${covidUser!.role}",
+            "Role: ${covidUser.role}",
             style: const TextStyle(fontSize: 20.0),
           ),
         ),
@@ -117,7 +117,7 @@ late String _names;
       }
 setState(() {
   covidUser = CovidUser.fromJson(value.data()!.toJson());
-  _nameTextController.text = covidUser!.fullName;
+  _nameTextController.text = covidUser.fullName;
 });
 
     });
@@ -170,7 +170,7 @@ setState(() {
                     _status = true;
                 FirebaseFirestore.instance
                     .collection("users")
-                    .doc(_auth.currentUser!.uid).set(covidUser!.toJson()).whenComplete(() => print('Complete')).onError((error, stackTrace) => print("Could not complete"));
+                    .doc(_auth.currentUser!.uid).set(covidUser.toJson()).whenComplete(() => print('Complete')).onError((error, stackTrace) => print("Could not complete"));
 
                     // UserUpdateInfo info = UserUpdateInfo();
 

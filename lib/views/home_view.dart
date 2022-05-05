@@ -19,7 +19,7 @@ class HomeView extends StatefulWidget {
 
 class _HomeViewState extends State<HomeView> {
 
-  late CovidUser covidUser;
+  CovidUser? covidUser;
   final CollectionReference users = FirebaseFirestore.instance.collection(
       'users');
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -112,7 +112,7 @@ class _HomeViewState extends State<HomeView> {
                                     child: Image.asset('assets/feedback.png'),
                                   ),
                                   Expanded( child:TextButton(
-                                      child: const Text('Knowledge'),
+                                      child: const Text('Feedback'),
                                       style: TextButton.styleFrom(
                                         primary: Colors.purple,
                                       ),
@@ -133,7 +133,7 @@ class _HomeViewState extends State<HomeView> {
                                             context,
                                             MaterialPageRoute(
                                                 builder: (context) =>
-                                                     (covidUser.role=='Doctor')?const TestingViewDoctor():const TestingViewPatient()));
+                                                     (covidUser!.role=='Doctor')?const TestingViewDoctor():const TestingViewPatient()));
                            },
                           child: Card(
                             elevation: 2,
@@ -155,7 +155,7 @@ class _HomeViewState extends State<HomeView> {
                                             context,
                                             MaterialPageRoute(
                                                 builder: (context) =>
-                                                     (covidUser.role=='Doctor')?const TestingViewDoctor():const TestingViewPatient()));
+                                                     (covidUser?.role=='Doctor')?const TestingViewDoctor():const TestingViewPatient()));
                                       }),
                                  )
                                 ])),)

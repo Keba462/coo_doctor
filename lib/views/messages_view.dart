@@ -75,7 +75,7 @@ class _MessagesViewState extends State<MessagesView> {
       groupChatId = '${widget.peerId} - $currentUserId';
     }
     chatProvider.updateFirestoreData(
-        "users", currentUserId, {"chattingWith": widget.peerId});
+        "users", currentUserId, {"feedbackWith": widget.peerId});
   }
 
   void getSticker() {
@@ -92,7 +92,7 @@ class _MessagesViewState extends State<MessagesView> {
       });
     } else {
       chatProvider
-          .updateFirestoreData("users", currentUserId, {"chattingWith": null});
+          .updateFirestoreData("users", currentUserId, {"FeedbackWith": null});
     }
     return Future.value(false);
   }
@@ -130,6 +130,7 @@ class _MessagesViewState extends State<MessagesView> {
     }
   }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
