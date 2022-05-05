@@ -102,8 +102,15 @@ class _MessagesViewState extends State<MessagesView> {
       textEditingController.clear();
       chatProvider.sendFeedbackMessage(
           content, type, groupChatId, currentUserId, widget.peerId);
-      scrollController.animateTo(0,
-          duration: const Duration(milliseconds: 300), curve: Curves.easeOut);
+
+      WidgetsBinding.instance?.addPostFrameCallback((_) {
+        if(scrollController.hasClients){
+          scrollController.animateTo(0,
+              duration: const Duration(milliseconds: 300), curve: Curves.easeOut);
+        }
+      });
+
+
     } else {
       ScaffoldMessenger.of(context)
           .showSnackBar(const SnackBar(content: Text("Nothing to send")));

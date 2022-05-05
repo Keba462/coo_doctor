@@ -9,8 +9,8 @@ part of 'feedback_chat.dart';
 FeedbackChat _$FeedbackChatFromJson(Map<String, dynamic> json) => FeedbackChat(
       messageContent: json['messageContent'] as String,
       messageType: json['messageType'] as int,
-      idFrom: json['idFrom'] as String?,
-      idTo: json['idTo'] as String?,
+      idFrom: json['idFrom'] as String,
+      idTo: json['idTo'] as String,
       timestamp: json['timestamp'] as String,
     );
 

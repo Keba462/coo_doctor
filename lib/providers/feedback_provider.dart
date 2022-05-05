@@ -22,7 +22,7 @@ class ChatProvider {
 
   Stream<QuerySnapshot> getFeedbackMessage(String groupChatId, int limit) {
     return firebaseFirestore
-        .collection("messages")
+        .collection("feedback")
         .doc(groupChatId)
         .collection(groupChatId)
         .orderBy("timestamp", descending: true)

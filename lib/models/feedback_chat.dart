@@ -8,10 +8,10 @@ part 'feedback_chat.g.dart';
 class FeedbackChat{
   final String messageContent;
   final int messageType;
-  String? idTo;
-  String? idFrom;
+  String idTo;
+  String idFrom;
    String timestamp;
-  FeedbackChat({required this.messageContent, required this.messageType, this.idFrom, this.idTo,  required this.timestamp});
+  FeedbackChat({required this.messageContent, required this.messageType, required this.idFrom,required this.idTo,  required this.timestamp});
 
   factory FeedbackChat.fromDocument(DocumentSnapshot documentSnapshot) {
     String idFrom = documentSnapshot.get('idFrom');

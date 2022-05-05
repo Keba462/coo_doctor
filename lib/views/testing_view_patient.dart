@@ -21,8 +21,8 @@ class _TestingViewPatientState extends State<TestingViewPatient> {
   FirebaseCustomModel? model;
 
    Future<String>?_loaded;
-  TextEditingController _age = TextEditingController();
-  TextEditingController _temp = TextEditingController();
+  final TextEditingController _age = TextEditingController();
+  final TextEditingController _temp = TextEditingController();
 
   final fields = [
     DatasetFields(title: 'Diabetes'),
@@ -185,7 +185,7 @@ class _TestingViewPatientState extends State<TestingViewPatient> {
       children: <Widget>[
         ElevatedButton(
           onPressed: () {
-            _showSymptomsDialog();
+
             
             symtomsList =[];
             if (kDebugMode) {
@@ -349,14 +349,14 @@ class _TestingViewPatientState extends State<TestingViewPatient> {
   }
 
 
-  void _showDiagnosisDialog() {
+  void _showDiagnosisDialog(String result) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
         // return object of type Dialog
         return AlertDialog(
           title: const Text("Your Diagnosis"),
-          content: setupAlertDialogContainer(),
+          content: setupAlertDialogContainer(result),
           actions: <Widget>[
             TextButton(
               child: const Text("OK"),
@@ -372,6 +372,7 @@ class _TestingViewPatientState extends State<TestingViewPatient> {
 
   void createFeatureList(){
     List features =<double>[];
+    List symptoms =<bool>[];
     String result= "";
     String result1 = "Low Risk";
     String result2= "Moderate Risk";
@@ -383,14 +384,19 @@ class _TestingViewPatientState extends State<TestingViewPatient> {
     print("list:$symtomsList");
     for(var list in symtomsList) {
       if(list == true){
-        list = 1.0;
+        //list = 1.0;
+        features.add(1.0);
       }else if(list == false){
-        list=0.0;
+       // list=0.0;
+        features.add(0.0);
       }
-      features.add(list);
+      //features.add(list);
       print("feautures:, ${features}");
-      
-        if(features[6] <= 0.50){
+
+    }
+
+    print("Evalluation");
+    if(features[6] <= 0.50){
           if(features[11] <= 0.50){
             if(features[7] <= 0.50){
               if(features[8] <= 0.50){
@@ -410,7 +416,7 @@ class _TestingViewPatientState extends State<TestingViewPatient> {
                   result =result1;
                   print("result:$result");
                 }
-              }  
+              }
             }else{
               if(features[13] <= 0.50){
                 result =result2;
@@ -434,13 +440,13 @@ class _TestingViewPatientState extends State<TestingViewPatient> {
                     print("result:$result");
                   }
                 }
-            }else if(features[14] > 0.50){  
+            }else if(features[14] > 0.50){
               result =result3;
                 print("result:$result");
                 }
           }
-      }else{  
-         if(features[7] <= 0.50){  
+      }else{
+         if(features[7] <= 0.50){
            if(features[1] <= 39.25){
              if(features[0] <= 32.00){
                result =result2;
@@ -452,7 +458,7 @@ class _TestingViewPatientState extends State<TestingViewPatient> {
                }else{
                  result =result2;
                   print("result:$result");
-               } 
+               }
              }
            }else{
              if(features[0] <= 41.00){
@@ -461,7 +467,7 @@ class _TestingViewPatientState extends State<TestingViewPatient> {
                }else{
                  result =result3;
                   print("result:$result");
-               } 
+               }
            }
          }else{
              if(features[5] <= 0.50){
@@ -475,7 +481,7 @@ class _TestingViewPatientState extends State<TestingViewPatient> {
                }else{
                  result =result1;
                   print("result:$result3");
-               }} 
+               }}
                }else{
                   if(features[9] <= 0.50){
                      if(features[13] <= 0.5){
@@ -489,25 +495,26 @@ class _TestingViewPatientState extends State<TestingViewPatient> {
                     result =result3;
                      print("result:$result");
                   }
-               } 
+               }
            }
-      }   
-    }
+      }
+    _showSymptomsDialog(result);
   }
 
-  void _showSymptomsDialog() {
+  void _showSymptomsDialog(String result) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
         // return object of type Dialog
         return AlertDialog(
-          title: const Text("Your  choices"),
-          content: setupAlertDialogContainer(),
+          title: const Text("Your  Diagnosis"),
+          content: setupAlertDialogContainer(result),
           actions: <Widget>[
             TextButton(
               child: const Text("OK"),
               onPressed: () {
                 Navigator.of(context).pop();
+                return _showDiagnosis(result);
               },
             ),
           ],
@@ -516,7 +523,7 @@ class _TestingViewPatientState extends State<TestingViewPatient> {
     );
   }
 
-  Widget setupAlertDialogContainer() {
+  Widget setupAlertDialogContainer(String result) {
     return SizedBox(
       height: 300.0,
       width: 300.0,
@@ -552,29 +559,27 @@ class _TestingViewPatientState extends State<TestingViewPatient> {
       ),
     );
   }
-  /*
-   Widget setupAlertDialogColumn() {
-    return SizedBox(
-      height: 300.0,
-      width: 300.0,
-      child: Column(
 
-        children: [
-          //const SizedBox(height: 2.0,),
-          const Text('Your Results are: $result1',style: TextStyle(fontWeight: FontWeight.bold),),
-          ListView.builder(
-            itemCount: selectedFieldItems.length,
-            itemBuilder: (context, index) {
-                return ListTile(
-                  title: Text(selectedFieldItems[index].title),
-                );
-
-            },
-            shrinkWrap: true,
-          ),
-        ],
-      ),
+  void _showDiagnosis(String result) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return AlertDialog(
+          title: const Text("Your  Diagnosis"),
+          content: Text("Your Diagnosis is: $result"),
+          actions: <Widget>[
+            TextButton(
+              child: const Text("OK"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
     );
   }
-  */
-}
+  }
+
+
