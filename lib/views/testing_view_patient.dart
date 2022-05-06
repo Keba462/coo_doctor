@@ -86,7 +86,7 @@ class _TestingViewPatientState extends State<TestingViewPatient> {
         controller: _age,
         keyboardType: TextInputType.number,
         inputFormatters: <TextInputFormatter>[
-          FilteringTextInputFormatter.allow(RegExp(r'[0-9]{1,3}')),
+          FilteringTextInputFormatter.allow(RegExp(r'[0-9]{2}')),
         ],
         decoration: InputDecoration(
           labelText: 'Age',
@@ -103,7 +103,7 @@ class _TestingViewPatientState extends State<TestingViewPatient> {
         controller: _temp,
         keyboardType: TextInputType.number,
         inputFormatters: <TextInputFormatter>[
-          FilteringTextInputFormatter.allow(RegExp(r'[3-9]{1,3}')),
+          FilteringTextInputFormatter.allow(RegExp(r'[0-9.]{4}')),
         ],
         decoration: InputDecoration(
           labelText: 'Your Temprature',
@@ -359,6 +359,7 @@ class _TestingViewPatientState extends State<TestingViewPatient> {
           content: setupAlertDialogContainer(result),
           actions: <Widget>[
             TextButton(
+              style: TextButton.styleFrom(primary: Colors.purple),
               child: const Text("OK"),
               onPressed: () {
                 Navigator.of(context).pop();
@@ -511,6 +512,7 @@ class _TestingViewPatientState extends State<TestingViewPatient> {
           content: setupAlertDialogContainer(result),
           actions: <Widget>[
             TextButton(
+              style: TextButton.styleFrom(primary: Colors.purple),
               child: const Text("OK"),
               onPressed: () {
                 Navigator.of(context).pop();
@@ -570,6 +572,7 @@ class _TestingViewPatientState extends State<TestingViewPatient> {
           content: Text("Your Diagnosis is: $result"),
           actions: <Widget>[
             TextButton(
+              style: TextButton.styleFrom(primary: Colors.purple),
               child: const Text("OK"),
               onPressed: () {
                 Navigator.of(context).pop();

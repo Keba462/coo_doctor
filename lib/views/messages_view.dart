@@ -255,7 +255,7 @@ class _MessagesViewState extends State<MessagesView> {
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: Image.network(
-                    "https://images.unsplash.com/photo-1597466765990-64ad1c35dafc",
+                    "https://unsplash.com/photos/3TLl_97HNJo",
                     width: 40,
                     height: 40,
                     fit: BoxFit.cover,
@@ -325,7 +325,7 @@ class _MessagesViewState extends State<MessagesView> {
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: Image.network(
-                    "https://images.unsplash.com/photo-1597466765990-64ad1c35dafc",
+                    "https://unsplash.com/photos/HD8KlyWRYYM",
                     width: 40,
                     height: 40,
                     fit: BoxFit.cover,
